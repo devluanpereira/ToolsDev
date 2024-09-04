@@ -4,96 +4,123 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToolsDev | Ferramentas OpenSource Gratuitas.</title>
+    <title>Consulta CEP e CNPJ</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
 
 <!-- Navbar -->
 <nav class="bg-white border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-            <div class="flex items-center">
-                <!-- Logo -->
-                <a href="#" class="text-xl font-bold text-pink-500">ToolsDev</a>
-            </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+        <!-- Logo -->
+        <a href="#" class="text-xl font-bold text-blue-600">Logo</a>
 
-            <!-- Links de Navegação (desktop - pc) -->
-            <div class="hidden md:flex ml-auto space-x-8">
-                <a href="#" class="text-gray-700 hover:text-pink-500">Início</a>
-                <a href="#" class="text-gray-700 hover:text-pink-500">Serviços</a>
-                <a href="#" class="text-gray-700 hover:text-pink-500">Sobre</a>
-                <a href="#" class="text-gray-700 hover:text-pink-500">Contato</a>
-            </div>
-
-            <!-- Botão Menu Hamburguer (mobile) -->
-            <div class="flex md:hidden">
-                <button id="menu-btn" class="text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
+        <!-- Links de Navegação -->
+        <div class="hidden md:flex space-x-8">
+            <a href="#" class="text-gray-700 hover:text-blue-600">Início</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600">Serviços</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600">Sobre</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600">Contato</a>
         </div>
 
-        <!-- Links de Navegação (mobile) -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Início</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Serviços</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Sobre</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Contato</a>
+        <!-- Botão Menu Hamburguer (mobile) -->
+        <div class="flex items-center md:hidden">
+            <button id="menu-btn" class="text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
         </div>
+    </div>
+
+    <!-- Links de Navegação (mobile) -->
+    <div id="mobile-menu" class="hidden md:hidden">
+        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Início</a>
+        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Serviços</a>
+        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Sobre</a>
+        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Contato</a>
     </div>
 </nav>
 
 <!-- Conteúdo da Página -->
 <div class="container mx-auto p-8">
-    <h1 class="text-2xl font-bold mb-4">Página Inicial</h1>
-    
-    <!-- Card para abrir o modal -->
-    <div class="bg-pink-100 p-6 rounded-lg shadow-lg cursor-pointer" id="open-modal-btn">
-        <h2 class="text-lg font-semibold mb-2">Consultar CEP</h2>
-        <p>Pesquise cep gratuitamente sem necessidade de login.</p>
-    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Card para CEP -->
+        <div class="bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:bg-blue-50" id="cep-card">
+            <h2 class="text-xl font-semibold text-gray-800">Consulta de CEP</h2>
+            <p class="text-gray-600">Clique para consultar informações de CEP.</p>
+        </div>
 
-    <!-- Modal -->
-    <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50 hidden">
-        <div class="bg-white p-8 rounded-lg w-full max-w-lg">
-            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-            <h2 class="text-2xl font-bold mb-4">Consulta de CEP</h2>
-            <form id="cep-form" class="flex mb-4">
-                <input type="text" id="cep" name="cep" placeholder="Digite o CEP" class="border p-2 rounded mr-2 w-full">
-                <button type="submit" class="bg-pink-500 text-white p-2 rounded">Buscar</button>
-            </form>
-            <div id="result" class="bg-white p-4 rounded shadow"></div>
+        <!-- Card para CNPJ -->
+        <div class="bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:bg-green-50" id="cnpj-card">
+            <h2 class="text-xl font-semibold text-gray-800">Consulta de CNPJ</h2>
+            <p class="text-gray-600">Clique para consultar informações de CNPJ.</p>
         </div>
     </div>
 </div>
 
-<!-- Script para Toggle do Menu Mobile e Modal -->
+<!-- Modal de Consulta CEP -->
+<div id="cep-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-2xl font-bold mb-4">Buscar CEP</h2>
+        <form id="cep-form">
+            <input type="text" id="cep" name="cep" placeholder="Digite o CEP" class="border p-2 rounded mb-4 w-full">
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full">Buscar</button>
+        </form>
+        <div id="cep-result" class="bg-gray-100 p-4 rounded mt-4"></div>
+        <button id="close-cep-modal" class="mt-4 bg-red-500 text-white p-2 rounded w-full">Fechar</button>
+    </div>
+</div>
+
+<!-- Modal de Consulta CNPJ -->
+<div id="cnpj-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-2xl font-bold mb-4">Buscar CNPJ</h2>
+        <form id="cnpj-form">
+            <input type="text" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" class="border p-2 rounded mb-4 w-full">
+            <button type="submit" class="bg-green-500 text-white p-2 rounded w-full">Buscar</button>
+        </form>
+        <div id="cnpj-result" class="bg-gray-100 p-4 rounded mt-4"></div>
+        <button id="close-cnpj-modal" class="mt-4 bg-red-500 text-white p-2 rounded w-full">Fechar</button>
+    </div>
+</div>
+
+<!-- Script para Toggle do Menu Mobile e Modais -->
 <script>
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
-    const openModalBtn = document.getElementById('open-modal-btn');
-    const modal = document.getElementById('modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
 
     menuBtn.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
     });
 
-    openModalBtn.addEventListener('click', () => {
-        modal.classList.remove('hidden');
+    // Mostrar e esconder o modal de CEP
+    const cepCard = document.getElementById('cep-card');
+    const cepModal = document.getElementById('cep-modal');
+    const closeCepModal = document.getElementById('close-cep-modal');
+
+    cepCard.addEventListener('click', () => {
+        cepModal.classList.remove('hidden');
     });
 
-    closeModalBtn.addEventListener('click', () => {
-        modal.classList.add('hidden');
+    closeCepModal.addEventListener('click', () => {
+        cepModal.classList.add('hidden');
     });
 
+    // Mostrar e esconder o modal de CNPJ
+    const cnpjCard = document.getElementById('cnpj-card');
+    const cnpjModal = document.getElementById('cnpj-modal');
+    const closeCnpjModal = document.getElementById('close-cnpj-modal');
+
+    cnpjCard.addEventListener('click', () => {
+        cnpjModal.classList.remove('hidden');
+    });
+
+    closeCnpjModal.addEventListener('click', () => {
+        cnpjModal.classList.add('hidden');
+    });
+
+    // Consulta de CEP
     document.getElementById('cep-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const cep = document.getElementById('cep').value;
@@ -102,19 +129,56 @@
             return;
         }
 
-        const response = await fetch(`/buscar-cep?cep=${cep}`);
-        const data = await response.json();
+        try {
+            const response = await fetch(`/buscar-cep?cep=${cep}`);
+            const data = await response.json();
 
-        if (response.ok) {
-            document.getElementById('result').innerHTML = `
-                <p><strong>CEP:</strong> ${data.cep}</p>
-                <p><strong>Estado:</strong> ${data.state}</p>
-                <p><strong>Cidade:</strong> ${data.city}</p>
-                <p><strong>Bairro:</strong> ${data.neighborhood}</p>
-                <p><strong>Rua:</strong> ${data.street}</p>
-            `;
-        } else {
-            document.getElementById('result').innerHTML = `<p class="text-red-500">Erro: ${data.message || 'CEP não encontrado.'}</p>`;
+            if (response.ok) {
+                document.getElementById('cep-result').innerHTML = `
+                    <p><strong>CEP:</strong> ${data.cep}</p>
+                    <p><strong>Estado:</strong> ${data.state}</p>
+                    <p><strong>Cidade:</strong> ${data.city}</p>
+                    <p><strong>Bairro:</strong> ${data.neighborhood}</p>
+                    <p><strong>Rua:</strong> ${data.street}</p>
+                `;
+            } else {
+                document.getElementById('cep-result').innerHTML = `<p class="text-red-500">Erro: ${data.message || 'CEP não encontrado.'}</p>`;
+            }
+        } catch (error) {
+            document.getElementById('cep-result').innerHTML = `<p class="text-red-500">Erro ao buscar CEP: ${error.message}</p>`;
+        }
+    });
+
+    // Consulta de CNPJ
+    document.getElementById('cnpj-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const cnpj = document.getElementById('cnpj').value;
+        if (!cnpj) {
+            alert("Por favor, digite um CNPJ válido.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/buscar-cnpj?cnpj=${cnpj}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                document.getElementById('cnpj-result').innerHTML = `
+                    <p><strong>CNPJ:</strong> ${data.cnpj}</p>
+                    <p><strong>Razão Social:</strong> ${data.razao_social}</p>
+                    <p><strong>Nome Fantasia:</strong> ${data.nome_fantasia}</p>
+                    <p><strong>UF:</strong> ${data.uf}</p>
+                    <p><strong>Município:</strong> ${data.municipio}</p>
+                    <p><strong>Bairro:</strong> ${data.bairro}</p>
+                    <p><strong>Logradouro:</strong> ${data.logradouro}</p>
+                    <p><strong>Número:</strong> ${data.numero}</p>
+                    <p><strong>CEP:</strong> ${data.cep}</p>
+                `;
+            } else {
+                document.getElementById('cnpj-result').innerHTML = `<p class="text-red-500">Erro: ${data.message || 'CNPJ não encontrado.'}</p>`;
+            }
+        } catch (error) {
+            document.getElementById('cnpj-result').innerHTML = `<p class="text-red-500">Erro ao buscar CNPJ: ${error.message}</p>`;
         }
     });
 </script>
