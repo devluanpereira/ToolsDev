@@ -165,14 +165,14 @@
             if (response.ok) {
                 document.getElementById('cnpj-result').innerHTML = `
                     <p><strong>CNPJ:</strong> ${data.cnpj}</p>
-                    <p><strong>Razão Social:</strong> ${data.razao_social}</p>
-                    <p><strong>Nome Fantasia:</strong> ${data.nome_fantasia}</p>
-                    <p><strong>UF:</strong> ${data.uf}</p>
-                    <p><strong>Município:</strong> ${data.municipio}</p>
-                    <p><strong>Bairro:</strong> ${data.bairro}</p>
-                    <p><strong>Logradouro:</strong> ${data.logradouro}</p>
-                    <p><strong>Número:</strong> ${data.numero}</p>
-                    <p><strong>CEP:</strong> ${data.cep}</p>
+                    <p><strong>Razão Social:</strong> ${data.razao_social || 'Não disponível'}</p>
+                    <p><strong>Nome Fantasia:</strong> ${data.nome_fantasia || 'Não disponível'}</p>
+                    <p><strong>UF:</strong> ${data.uf || 'Não disponível'}</p>
+                    <p><strong>Município:</strong> ${data.municipio || 'Não disponível'}</p>
+                    <p><strong>Bairro:</strong> ${data.bairro || 'Não disponível'}</p>
+                    <p><strong>Logradouro:</strong> ${data.logradouro || 'Não disponível'}</p>
+                    <p><strong>Número:</strong> ${data.numero || 'Não disponível'}</p>
+                    <p><strong>CEP:</strong> ${data.cep || 'Não disponível'}</p>
                 `;
             } else {
                 document.getElementById('cnpj-result').innerHTML = `<p class="text-red-500">Erro: ${data.message || 'CNPJ não encontrado.'}</p>`;
