@@ -7,11 +7,13 @@
     <title>Consulta CEP e CNPJ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 <body class="bg-white flex flex-col min-h-screen">
 
     <!-- Navbar -->
-    <nav class="bg-pink-400 border-b border-gray-200">
+    <nav class="bg-pink-400 border-b border-gray-200 fixed w-full top-0 left-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
             <!-- Logo -->
             <a href="/" class="text-xl font-bold text-white">ToolsDev</a>
@@ -26,25 +28,24 @@
 
             <!-- Botão Menu Hamburguer (mobile) -->
             <div class="flex items-center md:hidden">
-                <button id="menu-btn" class="text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+                <button id="menu-btn" class="hover:bg-pink-300 p-2 rounded">
+                    <i class="fas fa-bars text-white"></i>
                 </button>
-            </div>
+            </div>                        
+            
         </div>
 
         <!-- Links de Navegação (mobile) -->
         <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Início</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Serviços</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Sobre</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Contato</a>
+            <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Início</a>
+            <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Serviços</a>
+            <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Sobre</a>
+            <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Contato</a>
         </div>
     </nav>
 
     <!-- Conteúdo da Página -->
-    <main class="flex-grow container mx-auto p-8 overflow-auto">
+    <main class="flex-grow pt-20 container mx-auto p-8 overflow-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Card para CEP -->
             <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300" id="cep-card">
@@ -79,6 +80,54 @@
                 </h2>
                 <p class="text-slate-50">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
             </div>
+
+            <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300">
+                <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                    <i class="fas fa-code"></i>
+                    <span>Adicione mais funções</span>
+                </h2>
+                <p class="text-slate-50">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+
+            <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300">
+                <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                    <i class="fas fa-code"></i>
+                    <span>Adicione mais funções</span>
+                </h2>
+                <p class="text-slate-50">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+
+            <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300">
+                <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                    <i class="fas fa-code"></i>
+                    <span>Adicione mais funções</span>
+                </h2>
+                <p class="text-slate-50">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+
+            <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300">
+                <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                    <i class="fas fa-code"></i>
+                    <span>Adicione mais funções</span>
+                </h2>
+                <p class="text-slate-50">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+
+            <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300">
+                <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                    <i class="fas fa-code"></i>
+                    <span>Adicione mais funções</span>
+                </h2>
+                <p class="text-slate-50">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+
+            <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300">
+                <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                    <i class="fas fa-code"></i>
+                    <span>Adicione mais funções</span>
+                </h2>
+                <p class="text-slate-50">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
         </div>
     </main>
 
@@ -94,10 +143,10 @@
 
                 <!-- Links de Navegação -->
                 <div class="flex space-x-4">
-                    <a href="#" class="text-gray-300 hover:text-blue-400">Início</a>
-                    <a href="#" class="text-gray-300 hover:text-blue-400">Serviços</a>
-                    <a href="#" class="text-gray-300 hover:text-blue-400">Sobre</a>
-                    <a href="#" class="text-gray-300 hover:text-blue-400">Contato</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 flex items-center space-x-2">
+                        <i class='bx bxl-github'></i>
+                        <span class="hidden md:inline"></span>
+                    </a>
                 </div>
             </div>
         </div>
