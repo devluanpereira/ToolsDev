@@ -6,21 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta CEP e CNPJ</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
-<body class="bg-gray-100">
+<body class="bg-white">
 
 <!-- Navbar -->
-<nav class="bg-white border-b border-gray-200">
+<nav class="bg-pink-400 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
         <!-- Logo -->
-        <a href="#" class="text-xl font-bold text-blue-600">Logo</a>
+        <a href="/" class="text-xl font-bold text-white">ToolsDev</a>
 
         <!-- Links de Navegação -->
         <div class="hidden md:flex space-x-8">
-            <a href="#" class="text-gray-700 hover:text-blue-600">Início</a>
-            <a href="#" class="text-gray-700 hover:text-blue-600">Serviços</a>
-            <a href="#" class="text-gray-700 hover:text-blue-600">Sobre</a>
-            <a href="#" class="text-gray-700 hover:text-blue-600">Contato</a>
+            <a href="#" class="text-white hover:text-pink-100">Início</a>
+            <a href="#" class="text-white hover:text-pink-100">Serviços</a>
+            <a href="#" class="text-white hover:text-pink-100">Sobre</a>
+            <a href="#" class="text-white hover:text-pink-100">Contato</a>
         </div>
 
         <!-- Botão Menu Hamburguer (mobile) -->
@@ -46,16 +48,39 @@
 <div class="container mx-auto p-8">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Card para CEP -->
-        <div class="bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:bg-blue-50" id="cep-card">
-            <h2 class="text-xl font-semibold text-gray-800">Consulta de CEP</h2>
-            <p class="text-gray-600">Clique para consultar informações de CEP.</p>
+        <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300" id="cep-card">
+            <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Consulta de CEP</span>
+            </h2>
+            <p class="text-slate-50">Clique para consultar informações de CEP.</p>
         </div>
+        
 
         <!-- Card para CNPJ -->
-        <div class="bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:bg-green-50" id="cnpj-card">
-            <h2 class="text-xl font-semibold text-gray-800">Consulta de CNPJ</h2>
-            <p class="text-gray-600">Clique para consultar informações de CNPJ.</p>
+        <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300" id="cnpj-card">
+            <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                <i class="fas fa-building"></i> <!-- Altere para o ícone desejado -->
+                <span>Consulta de CNPJ</span>
+            </h2>
+            <p class="text-slate-50">Clique para consultar informações de CNPJ.</p>
+        </div> 
+
+        <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300" id="cnpj-card">
+            <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                <i class="fas fa-building"></i> <!-- Altere para o ícone desejado -->
+                <span>Consulta de CNPJ</span>
+            </h2>
+            <p class="text-slate-50">Clique para consultar informações de CNPJ.</p>
         </div>
+
+        <div class="bg-pink-400 p-6 rounded-lg cursor-pointer hover:bg-pink-300" id="cnpj-card">
+            <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                <i class="fas fa-code"></i> <!-- Altere para o ícone desejado -->
+                <span>Adicione mais funções</span>
+            </h2>
+            <p class="text-slate-50">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div> 
     </div>
 </div>
 
@@ -78,7 +103,7 @@
         <h2 class="text-2xl font-bold mb-4">Buscar CNPJ</h2>
         <form id="cnpj-form">
             <input type="text" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" class="border p-2 rounded mb-4 w-full">
-            <button type="submit" class="bg-green-500 text-white p-2 rounded w-full">Buscar</button>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full">Buscar</button>
         </form>
         <div id="cnpj-result" class="bg-gray-100 p-4 rounded mt-4"></div>
         <button id="close-cnpj-modal" class="mt-4 bg-red-500 text-white p-2 rounded w-full">Fechar</button>
