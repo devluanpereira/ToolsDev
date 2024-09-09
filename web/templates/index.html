@@ -316,7 +316,7 @@
                 return;
             }
             try {
-                const response = await fetch(`/buscar-code?code=${code}`);
+                const response = await fetch(`/buscar-code?code=${bank}`);
                 const data = await response.json();
 
                 if (response.ok) {
