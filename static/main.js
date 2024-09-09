@@ -16,6 +16,7 @@ cepCard.addEventListener('click', () => {
 
 closeCepModal.addEventListener('click', () => {
     cepModal.classList.add('hidden');
+    limparCampos();
 });
 
 // Mostrar e esconder o Modal de ISPB Bank
@@ -29,6 +30,7 @@ bankCard.addEventListener('click', () => {
 
 closeBankModal.addEventListener('click', () => {
     bankModal.classList.add('hidden');
+    limparCampos();
 })
 
 
@@ -43,6 +45,7 @@ cnpjCard.addEventListener('click', () => {
 
 closeCnpjModal.addEventListener('click', () => {
     cnpjModal.classList.add('hidden');
+    limparCampos();
 });
 
 // Consulta de CEP
@@ -132,3 +135,14 @@ document.getElementById('bank-form').addEventListener('submit', async function (
         document.getElementById('code-result').innerHTML = `<p class="text-red-500">Erro ao buscar ISPB: ${error.message}</p>`;
     }
 });
+
+
+// Função para limpar os campos
+function limparCampos() {
+    document.getElementById('cnpj').value = '';
+    document.getElementById('cep').value = '';
+    document.getElementById('bank').value = '';
+    document.getElementById('cnpj-result').innerText = '';
+    document.getElementById('cep-result').innerText = '';
+    document.getElementById('code-result').innerText = '';
+}
