@@ -1,16 +1,13 @@
 {
-    "version": 2,
     "builds": [
       {
         "src": "cmd/server/main.go",
-        "use": "@vercel/go"
+        "use": "@vercel/go",
+        "config": { "includeFiles": ["go.mod", "go.sum"] }
       }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "cmd/server/main.go"
-      }
+      { "src": "/(.*)", "dest": "cmd/server/main.go" }
     ]
-  }
+}
   
