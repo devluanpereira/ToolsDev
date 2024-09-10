@@ -146,3 +146,24 @@ function limparCampos() {
     document.getElementById('cep-result').innerText = '';
     document.getElementById('code-result').innerText = '';
 }
+
+
+// Event listener para o campo de pesquisa
+document.getElementById('search-input').addEventListener('input', function() {
+    const query = this.value.trim().toLowerCase();
+    const cards = document.querySelectorAll('[data-title]');
+
+    cards.forEach(card => {
+        const title = card.getAttribute('data-title').toLowerCase();
+        if (title.includes(query)) {
+            card.style.display = 'block'; // Mostra o card
+        } else {
+            card.style.display = 'none'; // Oculta o card
+        }
+    });
+
+    // Se a pesquisa estiver vazia, mostra todos os cards
+    if (!query) {
+        cards.forEach(card => card.style.display = 'block');
+    }
+});
