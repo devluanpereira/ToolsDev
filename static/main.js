@@ -68,6 +68,7 @@ document.getElementById('cep-form').addEventListener('submit', async function (e
                         <p><strong>Cidade:</strong> ${data.city}</p>
                         <p><strong>Bairro:</strong> ${data.neighborhood}</p>
                         <p><strong>Rua:</strong> ${data.street}</p>
+                        <p><strong>Serviço:</strong> ${data.service}</p>
                     `;
         } else {
             document.getElementById('cep-result').innerHTML = `<p class="text-red-500">Erro: ${data.message || 'CEP não encontrado.'}</p>`;
@@ -125,6 +126,7 @@ document.getElementById('bank-form').addEventListener('submit', async function (
         if (response.ok) {
             document.getElementById('code-result').innerHTML = `
                         <p><strong>ISPB:</strong> ${data.ispb}</p>
+                        <p><strong>Code:</strong> ${data.code}</p>
                         <p><strong>Name:</strong> ${data.name}</p>
                         <p><strong>Nome Completo:</strong> ${data.fullname}</p>
                     `;
