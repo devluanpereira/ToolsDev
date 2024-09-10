@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// ======================================================================================================//
 func CnpjHandler(w http.ResponseWriter, r *http.Request) {
 	cnpj := r.URL.Query().Get("cnpj")
 	if cnpj == "" {
@@ -22,3 +23,5 @@ func CnpjHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
+
+//======================================================================================================//

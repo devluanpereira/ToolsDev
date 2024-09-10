@@ -8,6 +8,7 @@ import (
 	"consulta-cep/internal/services"
 )
 
+// =======================================================================================================//
 // HomeHandler renderiza a página inicial.
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	// Corrigido: atribuição correta usando :=
@@ -19,6 +20,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
+// ======================================================================================================//
 // CepHandler lida com a requisição de busca de CEP.
 func CepHandler(w http.ResponseWriter, r *http.Request) {
 	cep := r.URL.Query().Get("cep")
@@ -36,3 +38,5 @@ func CepHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
+
+//======================================================================================================//

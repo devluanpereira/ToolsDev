@@ -1,5 +1,6 @@
 package models
 
+// ==============================================//
 type CepData struct {
 	Cep          string `json:"cep"`
 	State        string `json:"state"`
@@ -7,3 +8,5 @@ type CepData struct {
 	Neighborhood string `json:"neighborhood"`
 	Street       string `json:"street"`
 }
+
+//==============================================//

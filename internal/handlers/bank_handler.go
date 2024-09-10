@@ -1,10 +1,13 @@
 package handlers
 
+//==============================================================================================//
 import (
 	"consulta-cep/internal/services"
 	"encoding/json"
 	"net/http"
 )
+
+//==============================================================================================//
 
 func BankHandler(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
@@ -22,3 +25,5 @@ func BankHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
+
+//=============================================================================================//

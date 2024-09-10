@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// ======================================================================================================//
 func FetchCnpjData(cnpj string) (*models.CnpjData, error) {
 	resp, err := http.Get("https://brasilapi.com.br/api/cnpj/v1/" + cnpj)
 	if err != nil {
@@ -25,3 +26,5 @@ func FetchCnpjData(cnpj string) (*models.CnpjData, error) {
 
 	return &data, nil
 }
+
+// ======================================================================================================//

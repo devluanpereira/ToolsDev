@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// =========================================================================//
 func main() {
 
 	// Servindo arquivos estáticos (CSS, JS, imagens)
@@ -21,3 +22,5 @@ func main() {
 	fmt.Println("Servidor rodando em http://localhost:8000")
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
+
+//=========================================================================//

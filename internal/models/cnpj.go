@@ -1,5 +1,6 @@
 package models
 
+// ==============================================//
 type CnpjData struct {
 	Cnpj          string `json:"cnpj"`
 	Razao_Social  string `json:"razao_social"`
@@ -11,3 +12,5 @@ type CnpjData struct {
 	Numero        string `json:"numero"`
 	Cep           string `json:"cep"`
 }
+
+//==============================================//

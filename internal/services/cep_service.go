@@ -8,6 +8,7 @@ import (
 	"consulta-cep/internal/models"
 )
 
+// ======================================================================================================//
 // FetchCepData consulta a BrasilAPI para buscar os dados de um CEP.
 func FetchCepData(cep string) (*models.CepData, error) {
 	resp, err := http.Get("https://brasilapi.com.br/api/cep/v2/" + cep)
@@ -27,3 +28,5 @@ func FetchCepData(cep string) (*models.CepData, error) {
 
 	return &data, nil
 }
+
+// ======================================================================================================//

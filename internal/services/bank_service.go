@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// ======================================================================================================//
 // FetchBankData consulta a BrasilAPI para buscar os dados de um ISPB.
 func FetchBankData(code string) (*models.BankData, error) {
 	resp, err := http.Get("https://brasilapi.com.br/api/banks/v1/" + code)
@@ -26,3 +27,5 @@ func FetchBankData(code string) (*models.BankData, error) {
 
 	return &data, nil
 }
+
+// ======================================================================================================//
