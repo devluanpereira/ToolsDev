@@ -18,6 +18,7 @@ func main() {
 	http.HandleFunc("/buscar-cep", handlers.CepHandler)
 	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
 	http.HandleFunc("/buscar-code", handlers.BankHandler)
+	http.HandleFunc("/iplookup", handlers.IPHandler)
 
 	fmt.Println("Servidor rodando em http://localhost:8000")
 	log.Fatal(http.ListenAndServe(":8000", nil))

@@ -12,7 +12,8 @@
 
 </head>
 
-<body class="bg-white flex flex-col min-h-screen" style="background-image: url('/static/images/body.jpg'); background-size: cover; background-position: center;">
+<body class="bg-white flex flex-col min-h-screen"
+    style="background-image: url('/static/images/body.jpg'); background-size: cover; background-position: center;">
 
     <!-- Navbar -->
     <nav class="bg-[#4c4c4c] fixed w-full top-0 left-0 z-50">
@@ -21,16 +22,16 @@
             <a href="/" class="flex items-center">
                 <img src="static/images/logo.svg" alt="ToolsDev Logo" class="h-8 w-auto">
             </a>
-    
+
             <!-- Campo de Pesquisa -->
             <div class="relative hidden md:block">
-                <input type="text" id="search-input" placeholder="Pesquisar..." 
-                    class="bg-white text-gray-900 p-2 pl-10 rounded-md w-80 border focus:outline-none focus:ring-2 focus:ring-sky-800">
+                <input type="text" id="search-input" placeholder="Pesquisar..."
+                    class="bg-white text-gray-900 p-2 pl-10 rounded-md w-80 border focus:outline-none focus:ring-2 focus:ring-[#5c5c5c]">
                 <button id="search-btn" class="absolute left-0 top-0 mt-2 ml-2 text-gray-500">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-    
+
             <!-- Links de Navegação -->
             <div class="hidden md:flex space-x-8">
                 <a href="#" class="text-white hover:text-pink-100">Início</a>
@@ -38,15 +39,15 @@
                 <a href="#" class="text-white hover:text-pink-100">Sobre</a>
                 <a href="#" class="text-white hover:text-pink-100">Contato</a>
             </div>
-    
+
             <!-- Botão Menu Hamburguer (mobile) -->
             <div class="flex items-center md:hidden">
-                <button id="menu-btn" class="hover:bg-sky-800 p-2 rounded">
+                <button id="menu-btn" class="hover:bg-[#5c5c5c] p-2 rounded">
                     <i class="fas fa-bars text-white"></i>
                 </button>
             </div>
         </div>
-    
+
         <!-- Links de Navegação (mobile) -->
         <div id="mobile-menu" class="hidden md:hidden">
             <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Início</a>
@@ -55,12 +56,13 @@
             <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Contato</a>
         </div>
     </nav>
-    
+
     <!-- Conteúdo da Página -->
     <main class="flex-grow pt-20 container mx-auto p-8 overflow-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Card para CEP -->
-            <div class="bg-sky-950 p-6 rounded-lg cursor-pointer hover:bg-sky-800" id="cep-card" data-title="Consulta CEP">
+            <div class="bg-[#646464] p-6 rounded-lg cursor-pointer hover:bg-[#5c5c5c]" id="cep-card"
+                data-title="Consulta CEP">
                 <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Consulta de CEP</span>
@@ -69,7 +71,8 @@
             </div>
 
             <!-- Card para CNPJ -->
-            <div class="bg-sky-950 p-6 rounded-lg cursor-pointer hover:bg-sky-800" id="cnpj-card" data-title="Consulta CNPJ">
+            <div class="bg-[#646464] p-6 rounded-lg cursor-pointer hover:bg-[#5c5c5c]" id="cnpj-card"
+                data-title="Consulta CNPJ">
                 <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
                     <i class="fas fa-building"></i>
                     <span>Consulta de CNPJ</span>
@@ -77,12 +80,22 @@
                 <p class="text-slate-50">Clique para consultar informações de CNPJ.</p>
             </div>
 
-            <div class="bg-sky-950 p-6 rounded-lg cursor-pointer hover:bg-sky-800" id="bank-card" data-title="Consulta ISPB">
+            <div class="bg-[#646464] p-6 rounded-lg cursor-pointer hover:bg-[#5c5c5c]" id="bank-card"
+                data-title="Consulta ISPB">
                 <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
                     <i class="fas fa-bank"></i>
                     <span>Consulta de ISPB Bancos</span>
                 </h2>
                 <p class="text-slate-50">Clique para consultar informações de ISPB.</p>
+            </div>
+            <!-- Novo Card para IP Lookup -->
+            <div class="bg-[#646464] p-6 rounded-lg cursor-pointer hover:bg-[#5c5c5c]" id="iplookup-card"
+                onclick="window.location.href='/iplookup'" data-title="Consulta IP">
+                <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+                    <i class="fas fa-globe"></i>
+                    <span>Consulta de IP</span>
+                </h2>
+                <p class="text-slate-50">Clique para consultar informações do seu IP.</p>
             </div>
         </div>
     </main>
@@ -110,7 +123,7 @@
 
     <!-- Modal de Consulta CEP -->
     <div id="cep-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
-        <div class="bg-sky-950 p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div class="bg-[#646464] p-8 rounded-lg shadow-lg max-w-md w-full">
             <h2 class="text-2xl font-bold mb-4 text-white">Buscar CEP</h2>
             <form id="cep-form">
                 <input type="text" id="cep" name="cep" placeholder="Digite o CEP"
@@ -124,7 +137,7 @@
 
     <!-- Modal de Consulta ISPB -->
     <div id="bank-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
-        <div class="bg-sky-950 p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div class="bg-[#646464] p-8 rounded-lg shadow-lg max-w-md w-full">
             <h2 class="text-2xl font-bold mb-4 text-white">Buscar ISPB</h2>
             <form id="bank-form">
                 <input type="text" id="bank" name="bank" placeholder="Digite o ISPB"
@@ -138,7 +151,7 @@
 
     <!-- Modal de Consulta CNPJ -->
     <div id="cnpj-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
-        <div class="bg-sky-950 p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div class="bg-[#646464] p-8 rounded-lg shadow-lg max-w-md w-full">
             <h2 class="text-2xl font-bold mb-4 text-white">Buscar CNPJ</h2>
             <form id="cnpj-form">
                 <input type="text" id="cnpj" name="cnpj" placeholder="Digite o CNPJ"
