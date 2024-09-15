@@ -1,0 +1,11 @@
+version: '1.23.1'
+services:
+  app:
+    builder:
+      context: .
+    ports:
+    - "8080:8000"
+    volumes:
+    - .:/app
+    enviroment:
+    - ENV=production
