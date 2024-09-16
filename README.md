@@ -68,6 +68,22 @@ Essa estrutura proporciona uma organização clara e modular do código, facilit
     Abra seu navegador e vá para `http://localhost:8080` para ver a aplicação em funcionamento. Mais caso a porta esteja em uso mude para que esteja disponivel em `main.go`.
 
 
+## Como Executar o Projeto via Docker
+
+1. **Buildar a imagem**
+
+    ```bash
+    docker build -t toolsdev .
+    ```
+
+2. **Rodar o container**
+    ```bash
+    docker run -p 8080:8000 toolsdev
+
+    Se estiver usando docker-compose use o comando abaixo
+
+    docker-compose up --build
+    ```
 
 ## Como Contribuir
 
