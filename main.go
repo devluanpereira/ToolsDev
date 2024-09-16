@@ -20,7 +20,7 @@ func main() {
 	http.HandleFunc("/buscar-code", handlers.BankHandler)
 	http.HandleFunc("/iplookup", handlers.IPHandler)
 
-	fmt.Println("Servidor rodando em http://localhost:8000")
+	fmt.Println("Servidor rodando em http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
