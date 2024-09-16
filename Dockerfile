@@ -22,7 +22,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/static ./static
 COPY --from=builder /app/web ./web
 
-EXPOSE 8080
+EXPOSE 8000
 
 CMD ["./main"]
 
