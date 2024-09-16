@@ -4,7 +4,7 @@ WORKDIR /app
 
 
 COPY go.mod .
-COPY go.sum .
+#COPY go.sum .
 RUN go mod download
 
 
@@ -15,6 +15,8 @@ RUN go build -o main ./main.go
 FROM alpine:latest
 
 WORKDIR /root/
+
+COPY --from=builder /app/main .
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/static ./static
