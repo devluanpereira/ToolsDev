@@ -36,6 +36,7 @@ func main() {
 	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
 	http.HandleFunc("/buscar-code", handlers.BankHandler)
 	http.HandleFunc("/iplookup", handlers.IPHandler)
+	http.HandleFunc("/tools", handlers.InitHandler)
 
 	// Obtendo o IP local da máquina
 	localIP := getLocalIP()
