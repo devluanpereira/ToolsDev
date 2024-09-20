@@ -23,7 +23,7 @@
             <a href="/" class="flex items-center">
                 <img src="static/images/logo.svg" alt="ToolsDev Logo" class="h-8 w-auto">
             </a>
-
+    
             <!-- Campo de Pesquisa -->
             <div class="relative hidden md:block">
                 <input type="text" id="search-input" placeholder="Pesquisar..."
@@ -32,15 +32,13 @@
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-
+    
             <!-- Links de Navegação -->
-            <!--<div class="hidden md:flex space-x-8">
-                <a href="#" class="text-white hover:text-pink-100">Início</a>
-                <a href="#" class="text-white hover:text-pink-100">Serviços</a>
-                <a href="#" class="text-white hover:text-pink-100">Sobre</a>
-                <a href="#" class="text-white hover:text-pink-100">Contato</a>
-            </div>-->
-
+            <div class="hidden md:flex space-x-8">
+                <a href="/tools" class="text-white hover:text-pink-100">Ferramentas</a>
+                <a href="/logout" class="text-white hover:text-pink-100">Logout</a> <!-- Link de logout para desktop -->
+            </div>
+    
             <!-- Botão Menu Hamburguer (mobile) -->
             <div class="flex items-center md:hidden">
                 <button id="menu-btn" class="hover:bg-[#5c5c5c] p-2 rounded">
@@ -48,14 +46,12 @@
                 </button>
             </div>
         </div>
-
+    
         <!-- Links de Navegação (mobile) -->
-        <!--<div id="mobile-menu" class="hidden md:hidden">
-            <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Início</a>
-            <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Serviços</a>
-            <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Sobre</a>
-            <a href="#" class="block px-4 py-2 text-white hover:text-pink-100">Contato</a>
-        </div> -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="/tools" class="block px-4 py-2 text-white hover:text-pink-100">Ferramentas</a>
+            <a href="/logout" class="block px-4 py-2 text-white hover:text-pink-100">Logout</a> <!-- Link de logout para mobile -->
+        </div>
     </nav>
 
     <!-- Conteúdo da Página -->

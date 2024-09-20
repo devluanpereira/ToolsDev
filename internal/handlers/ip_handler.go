@@ -18,14 +18,12 @@ func GetIPFromRequest(r *http.Request) string {
 }
 
 func IPHandler(w http.ResponseWriter, r *http.Request) {
-	//ip := "8.8.8.8" //Descomente se estiver em modo desenvolvimento
-	ip := GetIPFromRequest(r)
+	ip := "8.8.8.8" //Descomente se estiver em modo desenvolvimento
+	//ip := GetIPFromRequest(r)
 
 	if colon := strings.LastIndex(ip, ":"); colon != -1 {
 		ip = ip[:colon]
 	}
-
-	fmt.Println("IP detectado:", ip)
 
 	ipInfo, err := services.GetIPInfo(ip)
 	if err != nil {
