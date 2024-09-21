@@ -170,13 +170,3 @@ document.getElementById('search-input').addEventListener('input', function() {
     }
 });
 
-function validateForm(event) {
-    const checkbox = document.getElementById('termsCheckbox');
-    const button = document.getElementById('loginButton');
-    if (!checkbox.checked) {
-        event.preventDefault(); // Impede o envio do formulário
-        alert('Você deve aceitar os termos e condições.');
-    } else {
-        button.disabled = false; // Habilita o botão se o checkbox estiver marcado
-    }
-}
