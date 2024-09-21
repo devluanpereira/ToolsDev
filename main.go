@@ -6,45 +6,33 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"net"
 	"net/http"
+	"os"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-
-	"github.com/fatih/color"
+	"github.com/joho/godotenv"
 )
 
-var db *sql.DB
-
-// Função para obter o IP da máquina local
-func getLocalIP() string {
-	addrs, err := net.InterfaceAddrs()
-	if err != nil {
-		return "Erro ao obter IP"
-	}
-
-	for _, addr := range addrs {
-		// Checa se é uma interface de rede com IP válido
-		if ipNet, ok := addr.(*net.IPNet); ok && !ipNet.IP.IsLoopback() && ipNet.IP.To4() != nil {
-			return ipNet.IP.String() // Retorna o primeiro IP encontrado
-		}
-	}
-	return "IP não encontrado"
-}
-
 func main() {
+	// Carregando as variáveis do arquivo .env
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("Erro ao carregar o arquivo .env: %v", err)
+	}
 
-	var err error
-
-	db, err = sql.Open("mysql", "projetosdev:luan@tcp(127.0.0.1:3306)/testeprimario")
+	// Inicializando a conexão com o banco de dados
+	db, err := initDB()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Erro ao conectar ao banco de dados: %v", err)
 	}
 	defer db.Close()
+	log.Println("Conexão com o banco de dados estabelecida com sucesso.")
+
 	// Servindo arquivos estáticos (CSS, JS, imagens)
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
+	// Definindo rotas
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/signup", handlers.Signup(db))
 	http.HandleFunc("/login", handlers.Login(db))
@@ -52,15 +40,45 @@ func main() {
 	http.HandleFunc("/buscar-cep", handlers.CepHandler)
 	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
 	http.HandleFunc("/buscar-code", handlers.BankHandler)
+
 	// Rotas protegidas pelo middleware
 	http.HandleFunc("/tools", services.Protected(handlers.Tools))
 
-	// Obtendo o IP local da máquina
-	localIP := getLocalIP()
+	// Inicializando o servidor na porta 8000
+	server := &http.Server{
+		Addr:         ":8000",
+		Handler:      nil,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  30 * time.Second,
+	}
 
-	// Exibindo o IP real da máquina no terminal
-	color.Green(fmt.Sprintf("Servidor rodando em http://%s:8000", localIP))
+	log.Println("Servidor rodando na porta 8000.")
+	log.Fatal(server.ListenAndServe())
+}
 
-	// Iniciando o servidor na porta 8000
-	log.Fatal(http.ListenAndServe(":8000", nil))
+// initDB inicializa a conexão com o banco de dados MySQL
+func initDB() (*sql.DB, error) {
+	// Obtendo as variáveis de ambiente
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbName := os.Getenv("DB_NAME")
+
+	// Configurando a string de conexão
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbPassword, dbHost, dbPort, dbName)
+
+	// Inicializando a conexão com o banco de dados
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		return nil, fmt.Errorf("erro ao abrir a conexão com o banco de dados: %w", err)
+	}
+
+	// Verificando a conexão com o banco de dados
+	if err := db.Ping(); err != nil {
+		return nil, fmt.Errorf("erro ao conectar ao banco de dados: %w", err)
+	}
+
+	return db, nil
 }
