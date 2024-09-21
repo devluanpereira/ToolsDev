@@ -35,8 +35,9 @@
     
             <!-- Links de Navegação -->
             <div class="hidden md:flex space-x-8">
-                <a href="/tools" class="text-white hover:text-pink-100">Ferramentas</a>
-                <a href="/logout" class="text-white hover:text-pink-100">Logout</a> <!-- Link de logout para desktop -->
+                <a href="/logout" class="text-white hover:text-pink-100">
+                    <i class='bx bx-exit text-2xl'></i>
+                </a> <!-- Link de logout para desktop -->
             </div>
     
             <!-- Botão Menu Hamburguer (mobile) -->
@@ -49,8 +50,9 @@
     
         <!-- Links de Navegação (mobile) -->
         <div id="mobile-menu" class="hidden md:hidden">
-            <a href="/tools" class="block px-4 py-2 text-white hover:text-pink-100">Ferramentas</a>
-            <a href="/logout" class="block px-4 py-2 text-white hover:text-pink-100">Logout</a> <!-- Link de logout para mobile -->
+            <a href="/logout" class="block px-4 py-2 text-white hover:text-pink-100">
+                <i class='bx bx-exit'></i> Sair
+            </a><!-- Link de logout para mobile -->
         </div>
     </nav>
 
@@ -84,15 +86,6 @@
                     <span>Consulta de ISPB Bancos</span>
                 </h2>
                 <p class="text-[#f3c6fc]">Clique para consultar informações de ISPB.</p>
-            </div>
-            <!-- Novo Card para IP Lookup -->
-            <div class="bg-[#646464] p-6 rounded-lg border-[#ae32c4] border-double border-4 cursor-pointer hover:bg-[#5c5c5c]" id="iplookup-card"
-                onclick="window.location.href='/iplookup'" data-title="Consulta IP">
-                <h2 class="text-xl font-semibold text-[#eb96fa] flex items-center space-x-2">
-                    <i class="fas fa-globe"></i>
-                    <span>Consulta de IP</span>
-                </h2>
-                <p class="text-[#f3c6fc]">Clique para consultar informações do seu IP.</p>
             </div>
         </div>
     </main>

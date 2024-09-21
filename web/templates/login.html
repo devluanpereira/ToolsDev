@@ -4,15 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Login</h1>
-    <form action="/login" method="POST">
-        <label for="name">Username:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <button type="submit">Login</button>
-    </form>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
+        <img src="static/images/logo1.svg" alt="Logo" class="w-24 h-24 mx-auto mb-4">
+        <h1 class="text-2xl font-bold mb-4 text-center">Login</h1>
+        <form action="/login" method="POST" onsubmit="validateForm(event)">
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-700"></label>
+                <input type="text" id="name" name="name" placeholder="Digite seu usuário..." required class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500" />
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
+                <input type="password" id="password" name="password" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500" />
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center">
+                    <input type="checkbox" id="termsCheckbox" class="mr-2">
+                    I accept the terms and conditions
+                </label>
+            </div>
+            <button type="submit" id="loginButton" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500" disabled>Login</button>
+        </form>
+        <p class="mt-4 text-center text-sm text-gray-600">
+            Se você não tem uma conta, <a href="/signup" class="text-blue-600 hover:underline">clique aqui para criar uma</a>.
+        </p>
+    </div>
+    <script src="static/main.js"></script>
 </body>
 </html>

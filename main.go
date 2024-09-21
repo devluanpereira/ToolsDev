@@ -54,7 +54,6 @@ func main() {
 	http.HandleFunc("/buscar-code", handlers.BankHandler)
 	// Rotas protegidas pelo middleware
 	http.HandleFunc("/tools", services.Protected(handlers.Tools))
-	http.HandleFunc("/iplookup", services.Protected(handlers.IpLookup))
 
 	// Obtendo o IP local da máquina
 	localIP := getLocalIP()
