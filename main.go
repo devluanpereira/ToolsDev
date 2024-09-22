@@ -15,24 +15,29 @@ import (
 )
 
 func main() {
-	// Carregando as variáveis do arquivo .env
+	// Load environment variables from .env file
 	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Erro ao carregar o arquivo .env: %v", err)
+		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-	// Inicializando a conexão com o banco de dados
+	// Initialize database connection
 	db, err := initDB()
 	if err != nil {
-		log.Fatalf("Erro ao conectar ao banco de dados: %v", err)
+		log.Fatalf("Error connecting to database: %v", err)
 	}
 	defer db.Close()
-	log.Println("Conexão com o banco de dados estabelecida com sucesso.")
+	log.Println("Database connection established successfully.")
 
-	// Servindo arquivos estáticos (CSS, JS, imagens)
+	// Create necessary tables
+	if err := createTables(db); err != nil {
+		log.Fatalf("Error creating tables: %v", err)
+	}
+
+	// Serve static files (CSS, JS, images)
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	// Definindo rotas
+	// Define routes
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/signup", handlers.Signup(db))
 	http.HandleFunc("/login", handlers.Login(db))
@@ -41,10 +46,9 @@ func main() {
 	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
 	http.HandleFunc("/buscar-code", handlers.BankHandler)
 
-	// Rotas protegidas pelo middleware
+	// Protected routes
 	http.HandleFunc("/tools", services.Protected(handlers.Tools))
 
-	// Inicializando o servidor na porta 8000
 	server := &http.Server{
 		Addr:         ":8000",
 		Handler:      nil,
@@ -53,32 +57,47 @@ func main() {
 		IdleTimeout:  30 * time.Second,
 	}
 
-	log.Println("Servidor rodando na porta 8000.")
-	log.Fatal(server.ListenAndServe())
+	log.Println("Server running on port 8000.")
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatalf("Server failed: %v", err)
+	}
 }
 
-// initDB inicializa a conexão com o banco de dados MySQL
 func initDB() (*sql.DB, error) {
-	// Obtendo as variáveis de ambiente
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbName := os.Getenv("DB_NAME")
 
-	// Configurando a string de conexão
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbPassword, dbHost, dbPort, dbName)
-
-	// Inicializando a conexão com o banco de dados
-	db, err := sql.Open("mysql", dsn)
-	if err != nil {
-		return nil, fmt.Errorf("erro ao abrir a conexão com o banco de dados: %w", err)
+	if dbUser == "" || dbPassword == "" || dbHost == "" || dbPort == "" || dbName == "" {
+		return nil, fmt.Errorf("one or more required environment variables are not set")
 	}
 
-	// Verificando a conexão com o banco de dados
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbPassword, dbHost, dbPort, dbName)
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		return nil, fmt.Errorf("error opening database connection: %w", err)
+	}
+
 	if err := db.Ping(); err != nil {
-		return nil, fmt.Errorf("erro ao conectar ao banco de dados: %w", err)
+		return nil, fmt.Errorf("error connecting to database: %w", err)
 	}
 
 	return db, nil
+}
+
+func createTables(db *sql.DB) error {
+	query := `CREATE TABLE IF NOT EXISTS users (
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		name VARCHAR(255) NOT NULL UNIQUE,
+		email VARCHAR(255) NOT NULL,
+		password VARCHAR(255) NOT NULL
+	);`
+
+	if _, err := db.Exec(query); err != nil {
+		return fmt.Errorf("error creating tables: %w", err)
+	}
+
+	return nil
 }
