@@ -90,8 +90,8 @@ func initDB() (*sql.DB, error) {
 func createTables(db *sql.DB) error {
 	query := `CREATE TABLE IF NOT EXISTS users (
 		id INT AUTO_INCREMENT PRIMARY KEY,
-		name VARCHAR(255) NOT NULL UNIQUE,
-		email VARCHAR(255) NOT NULL,
+		name VARCHAR(255) NOT NULL,  -- Removido UNIQUE
+		email VARCHAR(255) NOT NULL UNIQUE,  -- Email deve ser único
 		password VARCHAR(255) NOT NULL
 	);`
 
