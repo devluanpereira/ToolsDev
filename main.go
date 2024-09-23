@@ -59,7 +59,7 @@ func main() {
 
 	log.Println("Server running on port 8000.")
 	if err := server.ListenAndServe(); err != nil {
-		log.Fatalf("Server failed: %v", err)
+		log.Fatalf("Server falhou: %v", err)
 	}
 }
 
