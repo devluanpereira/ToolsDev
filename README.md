@@ -9,13 +9,11 @@ Este projeto é uma aplicação web que permite consultar informações sobre CE
 - **Backend**: Go
 - **Frontend**: HTMX, Tailwind CSS
 - **API**: BrasilAPI (para consulta de CEP, CNPJ, ISPB Bancos, etc.)
-- **API**: APInfo (para consulta IP)
 ## Funcionalidades
 
 - **Consulta de CEP**: Permite buscar informações detalhadas sobre um CEP.
 - **Consulta de CNPJ**: Permite buscar informações sobre uma empresa pelo CNPJ.
 - **Consulta de ISPB Bancos**: Permite buscar informações sobre bancos utilizando o código ISPB.
-- **Consulta de IP**: Permite encontrar informações do seu IP.
 
 
 ## Descrição dos Componentes
@@ -25,19 +23,15 @@ Este projeto é uma aplicação web que permite consultar informações sobre CE
   - `cep_handler.go`: Manipulador para consultas de CEP.
   - `cnpj_handler.go`: Manipulador para consultas de CNPJ.
   - `bank_handler.go`: Manipulador para consultas de ISPB Bancos.
-  - `ip_handler.go`: Manipulador para consultas de IP.
 - **internal/models/**: Contém os modelos de dados para a aplicação:
   - `cep.go`: Modelo para os dados de CEP.
   - `cnpj.go`: Modelo para os dados de CNPJ.
   - `bank.go`: Modelo para os dados de ISPB Bancos.
-  - `ip.go`: Modelo para os dados de IP.
 - **internal/services/**: Contém os serviços que fazem as chamadas para a API da BrasilAPI e processam os dados:
   - `cep_service.go`: Serviço para buscar dados de CEP.
   - `cnpj_service.go`: Serviço para buscar dados de CNPJ.
   - `bank_service.go`: Serviço para buscar dados de ISPB Bancos.
-  - `ip_service.go`: Serviço para buscar dados de IP.
 - **web/templates/index.html**: Template HTML para a página inicial da aplicação.
-- **web/templates/ip_lookup.html**: Template HTML para a página de consulta IP.
 - **go.mod**: Arquivo de módulo Go que gerencia as dependências do projeto.
 
 Essa estrutura proporciona uma organização clara e modular do código, facilitando a manutenção e a expansão futura da aplicação.
@@ -65,25 +59,8 @@ Essa estrutura proporciona uma organização clara e modular do código, facilit
 
 4. **Acesse a aplicação:**
 
-    Abra seu navegador e vá para `http://localhost:8080` para ver a aplicação em funcionamento. Mais caso a porta esteja em uso mude para que esteja disponivel em `main.go`.
+    Abra seu navegador e vá para `http://localhost:8000` para ver a aplicação em funcionamento. Mais caso a porta esteja em uso mude para que esteja disponivel em `main.go`.
 
-
-## Como Executar o Projeto via Docker
-
-1. **Buildar a imagem**
-
-    ```bash
-    docker build -t toolsdev .
-    ```
-
-2. **Rodar o container**
-    ```bash
-    docker run -p 8080:8000 toolsdev
-
-    Se estiver usando docker-compose use o comando abaixo
-
-    docker-compose up --build
-    ```
 
 ## Como Contribuir
 

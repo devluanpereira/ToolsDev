@@ -66,15 +66,14 @@ func main() {
 func initDB() (*sql.DB, error) {
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
-	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbName := os.Getenv("DB_NAME")
 
-	if dbUser == "" || dbPassword == "" || dbHost == "" || dbPort == "" || dbName == "" {
+	if dbUser == "" || dbPassword == "" || dbPort == "" || dbName == "" {
 		return nil, fmt.Errorf("one or more required environment variables are not set")
 	}
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbPassword, dbHost, dbPort, dbName)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbPassword, os.Getenv("DB_HOST"), dbPort, dbName)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		return nil, fmt.Errorf("error opening database connection: %w", err)
