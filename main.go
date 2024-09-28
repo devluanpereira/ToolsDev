@@ -93,9 +93,9 @@ func createTables(db *sql.DB) error {
 		email VARCHAR(255) NOT NULL UNIQUE,  -- Email deve ser único
 		password VARCHAR(255) NOT NULL
 	);`
-
+    
 	if _, err := db.Exec(query); err != nil {
-		return fmt.Errorf("error creating tables: %w", err)
+		return fmt.Errorf("error creating erro ao criar tabela: %w", err)
 	}
 
 	return nil
