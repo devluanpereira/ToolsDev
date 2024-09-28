@@ -26,7 +26,7 @@ func main() {
 		log.Fatalf("Error connecting to database: %v", err)
 	}
 	defer db.Close()
-	log.Println("Database connection established successfully.")
+	log.Println("Conexao banco de dados realizada com sucesso.")
 
 	// Create necessary tables
 	if err := createTables(db); err != nil {
