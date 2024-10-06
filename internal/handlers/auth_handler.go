@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"html/template"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -54,7 +55,7 @@ func Login(db *sql.DB) http.HandlerFunc {
 				"exp":   time.Now().Add(time.Hour * 1).Unix(),
 			})
 
-			tokenString, err := token.SignedString([]byte("lpkgSpxZw3jf2gmri/obJUry5QW7NZlC4QStyc0Cd/E="))
+			tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET"))) // Usa a variável do .env
 			if err != nil {
 				http.Error(w, "Error generating token", http.StatusInternalServerError)
 				return

@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -14,7 +15,6 @@ func Protected(next http.HandlerFunc) http.HandlerFunc {
 		// Busca o cookie com o token
 		cookie, err := r.Cookie("token")
 		if err != nil || cookie.Value == "" {
-			// Se o cookie não existir ou estiver vazio, redireciona para login
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
@@ -27,11 +27,10 @@ func Protected(next http.HandlerFunc) http.HandlerFunc {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("algoritmo inesperado: %v", token.Header["alg"])
 			}
-			return []byte("lpkgSpxZw3jf2gmri/obJUry5QW7NZlC4QStyc0Cd/E="), nil
+			return []byte(os.Getenv("JWT_SECRET")), nil // Lê o segredo do .env
 		})
 
 		if err != nil {
-			// Se o token for inválido, redireciona para login
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
@@ -39,12 +38,10 @@ func Protected(next http.HandlerFunc) http.HandlerFunc {
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 			exp, ok := claims["exp"].(float64)
 			if !ok || int64(exp) < time.Now().Unix() {
-				// Se o token estiver expirado, redireciona para login
 				http.Redirect(w, r, "/login", http.StatusSeeOther)
 				return
 			}
 		} else {
-			// Se o token for inválido, redireciona para login
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
