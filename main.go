@@ -17,20 +17,20 @@ import (
 func main() {
 	// Load environment variables from .env file
 	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+		log.Fatalf("Erro carrega o arquivo .env : %v", err)
 	}
 
 	// Initialize database connection
 	db, err := initDB()
 	if err != nil {
-		log.Fatalf("Error connecting to database: %v", err)
+		log.Fatalf("Erro ao conectar no banco de dados: %v", err)
 	}
 	defer db.Close()
 	log.Println("Conexao banco de dados realizada com sucesso.")
 
 	// Create necessary tables
 	if err := createTables(db); err != nil {
-		log.Fatalf("Error creating tables: %v", err)
+		log.Fatalf("Erro ao criar tabelas: %v", err)
 	}
 
 	// Serve static files (CSS, JS, images)
@@ -57,7 +57,7 @@ func main() {
 		IdleTimeout:  30 * time.Second,
 	}
 
-	log.Println("Server running on port 8000.")
+	log.Println("Servidor rodando na porta 8000.")
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatalf("Server falhou: %v", err)
 	}
@@ -76,11 +76,11 @@ func initDB() (*sql.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbPassword, os.Getenv("DB_HOST"), dbPort, dbName)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
-		return nil, fmt.Errorf("error opening database connection: %w", err)
+		return nil, fmt.Errorf("error ao abrir conecxao com o banco de dados: %w", err)
 	}
 
 	if err := db.Ping(); err != nil {
-		return nil, fmt.Errorf("error connecting to database: %w", err)
+		return nil, fmt.Errorf("error ao conectar com o banco de dados: %w", err)
 	}
 
 	return db, nil
@@ -93,9 +93,9 @@ func createTables(db *sql.DB) error {
 		email VARCHAR(255) NOT NULL UNIQUE,  -- Email deve ser único
 		password VARCHAR(255) NOT NULL
 	);`
-    
+
 	if _, err := db.Exec(query); err != nil {
-		return fmt.Errorf("error creating erro ao criar tabela: %w", err)
+		return fmt.Errorf("erro ao criar tabela: %w", err)
 	}
 
 	return nil

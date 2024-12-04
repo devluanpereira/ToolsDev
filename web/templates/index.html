@@ -46,17 +46,36 @@
     <header class="container mx-auto px-4 flex flex-col md:flex-row items-center md:justify-between py-16 mt-16">
         <!-- Imagem Empresarial (Aparece ao lado do título em Desktop) -->
         <div class="w-full md:w-1/2 mb-4 md:mb-0">
-            <img src="static/images/logo1.svg" alt="Imagem Empresarial" class="w-full md:w-150 h-80">
+            <img src="static/images/logo1.svg" alt="Imagem Empresarial" class="w-full md:w-150 h-80 object-contain">
         </div>
 
         <!-- Título e Descrição (colados à imagem) -->
         <div class="w-full md:w-1/2 text-center md:text-left md:ml-0">
             <h1 class="text-3xl md:text-5xl font-bold text-[#eb96fa] mb-6">Bem-vindo à ToolsDev</h1>
-            <p class="text-lg text-[#f3c6fc] mb-6">Ferramentas gratuitas e OpenSource, aproveite o maximo! Estamos aberto para colaboradores, caso queira colaborar e expandir o projeto. </p>
+            <p class="text-lg text-[#f3c6fc] mb-6">Ferramentas gratuitas e OpenSource, aproveite ao máximo! Estamos abertos para colaboradores, caso queira colaborar e expandir o projeto.</p>
             <!-- Botão abaixo da descrição com espaçamento adequado -->
             <a onclick="window.location.href='/tools'" class="bg-[#ae32c4] cursor-pointer text-white px-6 py-2 rounded-full mt-8 hover:bg-[#e165f7] transition duration-300">Iniciar</a>
         </div>
-    </header>  
+    </header>
+
+    <!-- Seção de Recursos -->
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-2xl md:text-4xl font-bold text-[#eb96fa] text-center mb-6">Nossos Recursos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-[#f3c6fc] p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                <h3 class="text-xl font-semibold text-[#ae32c4] mb-4">Ferramenta 1</h3>
+                <p class="text-base text-[#4a4a4a]">Descrição breve sobre a ferramenta 1. Ela ajuda a resolver problemas específicos e é super fácil de usar!</p>
+            </div>
+            <div class="bg-[#f3c6fc] p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                <h3 class="text-xl font-semibold text-[#ae32c4] mb-4">Ferramenta 2</h3>
+                <p class="text-base text-[#4a4a4a]">Descrição breve sobre a ferramenta 2. Ela tem funcionalidades poderosas e é ideal para desenvolvedores experientes.</p>
+            </div>
+            <div class="bg-[#f3c6fc] p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                <h3 class="text-xl font-semibold text-[#ae32c4] mb-4">Ferramenta 3</h3>
+                <p class="text-base text-[#4a4a4a]">Descrição breve sobre a ferramenta 3. Uma solução inovadora que facilita o dia a dia de desenvolvedores e empresas.</p>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-[#4c4c4c] text-white py-4 mt-auto">
@@ -70,7 +89,7 @@
                 <!-- Links de Navegação -->
                 <div class="flex space-x-4">
                     <a href="#" class="text-gray-300 hover:text-blue-400 flex items-center space-x-2">
-                        <i class='bx bxl-github text-2xl'></i>
+                        <i class="bx bxl-github text-2xl"></i>
                     </a>
                 </div>
             </div>

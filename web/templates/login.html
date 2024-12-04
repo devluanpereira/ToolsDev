@@ -8,36 +8,43 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
-        <img src="static/images/logo1.svg" alt="Logo" class="w-24 h-24 mx-auto mb-4">
-        <h1 class="text-2xl font-bold mb-4 text-center">Login</h1>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-blue-100">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div class="text-center">
+            <img src="static/images/logo1.svg" alt="Logo" class="w-20 h-20 mx-auto mb-4">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Bem-vindo!</h1>
+            <p class="text-gray-600">Faça login para continuar</p>
+        </div>
 
         {{if .ErrorMessage}}
-        <div class="mb-4 text-red-600 text-center">
+        <div class="mb-4 text-sm text-red-600 bg-red-100 p-2 rounded">
             {{.ErrorMessage}}
         </div>
         {{end}}
 
-        <form action="/login" method="POST">
-            <div class="mb-4">
+        <form action="/login" method="POST" class="mt-6">
+            <div class="mb-5">
                 <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
                 <input type="email" id="email" name="email" placeholder="Digite seu email..." required
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500" />
+                    class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
             </div>
-            <div class="mb-4">
+            <div class="mb-5">
                 <label for="password" class="block text-sm font-medium text-gray-700">Senha:</label>
-                <input type="password" id="password" name="password" required
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500" />
+                <input type="password" id="password" name="password" placeholder="Digite sua senha..." required
+                    class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
             </div>
             <button type="submit" id="loginButton"
-                class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500">Login</button>
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium text-lg hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 transition duration-200">
+                Entrar
+            </button>
         </form>
-        
-        <p class="mt-4 text-center text-sm text-gray-600">
-            Se você não tem uma conta, <a href="/signup" class="text-blue-600 hover:underline">clique aqui para criar
-                uma</a>.
-        </p>
+
+        <div class="mt-6 text-center text-sm">
+            <p class="text-gray-600">
+                Ainda não tem uma conta? 
+                <a href="/signup" class="text-blue-600 font-medium hover:underline">Crie uma agora</a>.
+            </p>
+        </div>
     </div>
 </body>
 
