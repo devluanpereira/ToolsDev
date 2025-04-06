@@ -36,6 +36,90 @@ Este projeto é uma aplicação web que permite consultar informações sobre CE
 
 Essa estrutura proporciona uma organização clara e modular do código, facilitando a manutenção e a expansão futura da aplicação.
 
+# Documentação dos Handlers de Autenticação
+
+Este projeto implementa funcionalidades de autenticação utilizando JWT (JSON Web Token) para login, registro e logout de usuários. Abaixo estão os detalhes de cada função responsável por processar as requisições HTTP.
+
+## Estrutura do Projeto
+
+O código define três handlers principais:
+- **Login**: Exibe a página de login e processa a autenticação de usuários.
+- **Signup**: Exibe a página de registro de novos usuários e processa o cadastro.
+- **Logout**: Realiza o logout removendo o token JWT armazenado no cookie.
+
+Esses handlers interagem com o banco de dados MySQL para autenticar usuários e armazenar informações de cadastro.
+
+## Handlers
+
+### 1. `Login` - Exibe a página de login e processa o login de usuários
+
+Este handler lida com a autenticação do usuário. Se as credenciais estiverem corretas, ele gera um token JWT e o envia de volta para o cliente via cookie.
+
+#### Funcionamento:
+
+- **Método GET**: Renderiza a página de login (`login.html`).
+- **Método POST**: Processa as credenciais enviadas pelo formulário:
+  - Verifica se o email existe no banco de dados.
+  - Compara a senha fornecida com a senha armazenada no banco, utilizando bcrypt.
+  - Se as credenciais forem válidas, um token JWT é gerado e retornado ao cliente via cookie.
+  - Redireciona o usuário para a página `/tools`.
+
+#### Código:
+
+```go
+func Login(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			tmpl := template.Must(template.ParseFiles("web/templates/login.html"))
+			tmpl.Execute(w, nil)
+			return
+		}
+
+		if r.Method == http.MethodPost {
+			email := r.FormValue("email")
+			password := r.FormValue("password")
+			var storedPassword string
+			err := db.QueryRow("SELECT password FROM users WHERE email = ?", email).Scan(&storedPassword)
+			if err != nil {
+				tmpl := template.Must(template.ParseFiles("web/templates/login.html"))
+				tmpl.Execute(w, LoginData{ErrorMessage: "Email ou senha inválidos."})
+				return
+			}
+
+			err = bcrypt.CompareHashAndPassword([]byte(storedPassword), []byte(password))
+			if err != nil {
+				tmpl := template.Must(template.ParseFiles("web/templates/login.html"))
+				tmpl.Execute(w, LoginData{ErrorMessage: "Email ou senha inválidos."})
+				return
+			}
+
+			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+				"email": email,
+				"exp":   time.Now().Add(time.Hour * 1).Unix(),
+			})
+
+			tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
+			if err != nil {
+				http.Error(w, "Error generating token", http.StatusInternalServerError)
+				return
+			}
+
+			http.SetCookie(w, &http.Cookie{
+				Name:    "token",
+				Value:   tokenString,
+				Expires: time.Now().Add(time.Hour * 1),
+				Path:    "/",
+			})
+
+			http.Redirect(w, r, "/tools", http.StatusSeeOther)
+		} else {
+			http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		}
+	}
+}
+
+```
+
 ## Como Executar o Projeto
 
 1. **Clone o repositório:**
