@@ -148,3 +148,7 @@ func Logout() http.HandlerFunc {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 }
+
+func CreditsUser() {
+
+}

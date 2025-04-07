@@ -27,7 +27,7 @@ func Protected(next http.HandlerFunc) http.HandlerFunc {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("algoritmo inesperado: %v", token.Header["alg"])
 			}
-			return []byte(os.Getenv("JWT_SECRET")), nil // Lê o segredo do .env
+			return []byte(os.Getenv("JWT_SECRET")), nil
 		})
 
 		if err != nil {
