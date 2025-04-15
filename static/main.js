@@ -52,7 +52,7 @@ document.getElementById('cnpj-form').addEventListener('submit', async function (
 // ISPB Lookup
 document.getElementById('bank-form').addEventListener('submit', async function (e) {
     e.preventDefault();
-    await performLookup('/buscar-code', 'bank', 'code-result', 'código');
+    await performLookup('/buscar-code', 'code', 'code-result', 'código');
 });
 
 // Lookup Helper Function
