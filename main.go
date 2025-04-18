@@ -44,7 +44,7 @@ func main() {
 	http.HandleFunc("/logout", handlers.Logout())
 	http.HandleFunc("/buscar-cep", handlers.CepHandler)
 	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
-	http.HandleFunc("/buscar-code", handlers.BankHandler)
+	http.HandleFunc("/buscar-code", handlers.BankHandler(db))
 
 	// Protected routes
 	http.HandleFunc("/tools", services.Protected(handlers.Tools))
@@ -91,7 +91,8 @@ func createTables(db *sql.DB) error {
 		id INT AUTO_INCREMENT PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,  -- Removido UNIQUE
 		email VARCHAR(255) NOT NULL UNIQUE,  -- Email deve ser único
-		password VARCHAR(255) NOT NULL
+		password VARCHAR(255) NOT NULL,
+		credits INT DEFAULT 30
 	);`
 
 	if _, err := db.Exec(query); err != nil {

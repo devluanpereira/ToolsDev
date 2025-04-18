@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"consulta-cep/internal/models"
 	"database/sql"
+	"errors"
 	"html/template"
 	"net/http"
 	"os"
@@ -32,7 +34,8 @@ func Login(db *sql.DB) http.HandlerFunc {
 			password := r.FormValue("password")
 
 			var storedPassword string
-			err := db.QueryRow("SELECT password FROM users WHERE email = ?", email).Scan(&storedPassword)
+			var user models.User
+			err := db.QueryRow("SELECT id, password FROM users WHERE email = ?", email).Scan(&user.ID, &storedPassword)
 			if err != nil {
 				// Renderiza a página de login com mensagem de erro
 				tmpl := template.Must(template.ParseFiles("web/templates/login.html"))
@@ -51,8 +54,9 @@ func Login(db *sql.DB) http.HandlerFunc {
 
 			// Gerar token JWT
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-				"email": email,
-				"exp":   time.Now().Add(time.Hour * 1).Unix(),
+				"email":  email,
+				"userID": user.ID,
+				"exp":    time.Now().Add(time.Hour * 1).Unix(),
 			})
 
 			tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET"))) // Usa a variável do .env
@@ -147,4 +151,48 @@ func Logout() http.HandlerFunc {
 		// Redireciona para a página de login após o logout
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
+}
+
+// Funcao para pegar o User ID do JWT
+func GetUserIDFromRequest(r *http.Request) (int, error) {
+	cookie, err := r.Cookie("token")
+	if err != nil {
+		return 0, errors.New("token não encontrado")
+	}
+
+	tokenString := cookie.Value
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return []byte(os.Getenv("JWT_SECRET")), nil
+	})
+
+	if err != nil || !token.Valid {
+		return 0, errors.New("token inválido")
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return 0, errors.New("claims invalidas")
+	}
+
+	uid, ok := claims["userID"].(float64)
+	if !ok {
+		return 0, errors.New("userID ausente no token")
+	}
+
+	return int(uid), nil
+}
+
+func ConsumeCredit(db *sql.DB, userID int) error {
+	var credits int
+	err := db.QueryRow("SELECT credits FROM users WHERE id = ?", userID).Scan(&credits)
+	if err != nil {
+		return err
+	}
+
+	if credits <= 0 {
+		return errors.New("Sem creditos disponiveis")
+	}
+
+	_, err = db.Exec("UPDATE users SET credits = credits -1 WHERE id = ?", userID)
+	return err
 }
