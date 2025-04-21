@@ -35,7 +35,7 @@ func Login(db *sql.DB) http.HandlerFunc {
 
 			var storedPassword string
 			var user models.User
-			err := db.QueryRow("SELECT id, password FROM users WHERE email = ?", email).Scan(&user.ID, &storedPassword)
+			err := db.QueryRow("SELECT id, password, role FROM users WHERE email = ?", email).Scan(&user.ID, &storedPassword, &user.Role)
 			if err != nil {
 				// Renderiza a página de login com mensagem de erro
 				tmpl := template.Must(template.ParseFiles("web/templates/login.html"))
@@ -56,6 +56,7 @@ func Login(db *sql.DB) http.HandlerFunc {
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 				"email":  email,
 				"userID": user.ID,
+				"role":   user.Role,
 				"exp":    time.Now().Add(time.Hour * 1).Unix(),
 			})
 
@@ -180,6 +181,33 @@ func GetUserIDFromRequest(r *http.Request) (int, error) {
 	}
 
 	return int(uid), nil
+}
+
+func GetRoleFromRequest(r *http.Request) (string, error) {
+	cookie, err := r.Cookie("token")
+	if err != nil {
+		return "", errors.New("token não encontrado")
+	}
+
+	tokenString := cookie.Value
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return []byte(os.Getenv("JWT_SECRET")), nil
+	})
+	if err != nil || !token.Valid {
+		return "", errors.New("token inválido")
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return "", errors.New("claims inválidas")
+	}
+
+	role, ok := claims["role"].(string)
+	if !ok {
+		return "", errors.New("role ausente no token")
+	}
+
+	return role, nil
 }
 
 func ConsumeCredit(db *sql.DB, userID int) error {

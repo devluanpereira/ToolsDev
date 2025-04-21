@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Admin - Adicionar Creditos</title>
+    </head>
+    <body>
+        <h1>Adicionar Creditos</h1>
+        <form method="POST" action="/admin/adicionar-creditos">
+            <label for="user_id">Usuário:</label>
+            <select name="user_id" id="user_id">
+                {{range.Users}}
+                    <option value="{{.ID}}">{{.Email}} {{.Credits}} credits</option>
+                {{end}}
+            </select>
+            <label for="credits">Créditos:</label>
+            <input type="number" name="credits" id="credits" required>
+
+            <button type="submit">Adicionar</button>
+        </form>
+        {{if.Message}}
+            <p>{{.Message}}</p>
+        {{end}}
+    </body>
+</html>

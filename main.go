@@ -2,6 +2,7 @@ package main
 
 import (
 	"consulta-cep/internal/handlers"
+	"consulta-cep/internal/middleware"
 	"consulta-cep/internal/services"
 	"database/sql"
 	"fmt"
@@ -45,6 +46,9 @@ func main() {
 	http.HandleFunc("/buscar-cep", handlers.CepHandler)
 	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
 	http.HandleFunc("/buscar-code", handlers.BankHandler(db))
+	http.HandleFunc("/admin/adicionar-creditos", middleware.AuthMiddleware(
+		middleware.AdminOnlyMiddleware(handlers.AdicionarCredito(db), db),
+	))
 
 	// Protected routes
 	http.HandleFunc("/tools", services.Protected(handlers.Tools))

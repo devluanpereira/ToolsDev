@@ -32,7 +32,7 @@ func BankHandler(db *sql.DB) http.HandlerFunc {
 
 		data, err := services.FetchBankData(code)
 		if err != nil {
-			http.Error(w, "Erro ao buscar code: "+err.Error(), http.StatusInternalServerError)
+			http.Error(w, "Erro ao buscar codigo", http.StatusInternalServerError)
 			return
 		}
 
