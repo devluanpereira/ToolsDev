@@ -31,7 +31,8 @@ func CepHandler(w http.ResponseWriter, r *http.Request) {
 
 	data, err := services.FetchCepData(cep)
 	if err != nil {
-		http.Error(w, "Erro ao buscar CEP: "+err.Error(), http.StatusInternalServerError)
+		// http.Error(w, "Erro ao buscar CEP: "+err.Error(), http.StatusInternalServerError)
+		http.Redirect(w, r, "/login", http.StatusBadRequest)
 		return
 	}
 

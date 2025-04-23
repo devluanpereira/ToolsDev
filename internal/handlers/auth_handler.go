@@ -152,7 +152,7 @@ func Logout() http.HandlerFunc {
 		})
 
 		// Redireciona para a página de login após o logout
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 }
 

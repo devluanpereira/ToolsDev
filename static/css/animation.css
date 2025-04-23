@@ -36,6 +36,18 @@
     background: radial-gradient(circle at center, #bfdbfe, #60a5fa);
   }
 
+  /* .card::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #bfdbfe;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+  } */
+
   @keyframes float1 {
     0% {
       transform: translate(0, 0) scale(1) rotate(0deg);

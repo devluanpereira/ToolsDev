@@ -40,7 +40,7 @@ func main() {
 
 	// Define routes
 	http.HandleFunc("/", handlers.HomeHandler)
-	http.HandleFunc("/buscar-cep", handlers.CepHandler)
+
 	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
 
 	http.HandleFunc("/logout", handlers.Logout())
@@ -49,12 +49,14 @@ func main() {
 	http.HandleFunc("/signup", handlers.Signup(db))
 	http.HandleFunc("/buscar-code", handlers.BankHandler(db))
 	http.HandleFunc("/criar-pagamento", handlers.CriarPagamento(db))
+
 	http.HandleFunc("/admin/adicionar", middleware.AuthMiddleware(
 		middleware.AdminOnlyMiddleware(handlers.AdicionarCredito(db), db),
 	))
 
 	// Protected routes
 	http.HandleFunc("/tools", services.Protected(handlers.Tools))
+	http.HandleFunc("/buscar-cep", services.Protected(handlers.CepHandler))
 
 	server := &http.Server{
 		Addr:         ":8000",
