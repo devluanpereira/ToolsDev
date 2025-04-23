@@ -22,6 +22,7 @@ func AdicionarCredito(db *sql.DB) http.HandlerFunc {
 				return
 			}
 			tmpl.Execute(w, nil)
+			return // <- ESSENCIAL!
 		}
 
 		if r.Method == http.MethodPost {
@@ -30,7 +31,7 @@ func AdicionarCredito(db *sql.DB) http.HandlerFunc {
 
 			quantidade, err := strconv.Atoi(quantidadeStr)
 			if err != nil {
-				http.Error(w, "Quantidade inválidade", http.StatusBadRequest)
+				http.Error(w, "Quantidade inválida", http.StatusBadRequest)
 				return
 			}
 
@@ -40,8 +41,11 @@ func AdicionarCredito(db *sql.DB) http.HandlerFunc {
 				return
 			}
 
-			http.Redirect(w, r, "/admin/dashboard", http.StatusSeeOther)
+			http.Redirect(w, r, "/admin/adicionar", http.StatusSeeOther)
+			return // <- ESSENCIAL!
 		}
+
+		// Se não for GET nem POST
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 	}
 }

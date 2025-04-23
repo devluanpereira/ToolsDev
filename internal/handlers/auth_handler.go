@@ -35,7 +35,7 @@ func Login(db *sql.DB) http.HandlerFunc {
 
 			var storedPassword string
 			var user models.User
-			err := db.QueryRow("SELECT id, password, role FROM users WHERE email = ?", email).Scan(&user.ID, &storedPassword, &user.Role)
+			err := db.QueryRow("SELECT id, password, role, credits FROM users WHERE email = ?", email).Scan(&user.ID, &storedPassword, &user.Role, &user.Credits)
 			if err != nil {
 				// Renderiza a página de login com mensagem de erro
 				tmpl := template.Must(template.ParseFiles("web/templates/login.html"))
@@ -54,10 +54,11 @@ func Login(db *sql.DB) http.HandlerFunc {
 
 			// Gerar token JWT
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-				"email":  email,
-				"userID": user.ID,
-				"role":   user.Role,
-				"exp":    time.Now().Add(time.Hour * 1).Unix(),
+				"email":   email,
+				"userID":  user.ID,
+				"role":    user.Role,
+				"credits": user.Credits,
+				"exp":     time.Now().Add(time.Hour * 1).Unix(),
 			})
 
 			tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET"))) // Usa a variável do .env
@@ -68,10 +69,11 @@ func Login(db *sql.DB) http.HandlerFunc {
 
 			// Define o cookie com o token JWT
 			http.SetCookie(w, &http.Cookie{
-				Name:    "token",
-				Value:   tokenString,
-				Expires: time.Now().Add(time.Hour * 1),
-				Path:    "/",
+				Name:     "token",
+				Value:    tokenString,
+				Path:     "/",
+				HttpOnly: true,
+				SameSite: http.SameSiteLaxMode,
 			})
 
 			// Redireciona para a página tools
@@ -218,9 +220,24 @@ func ConsumeCredit(db *sql.DB, userID int) error {
 	}
 
 	if credits <= 0 {
-		return errors.New("Sem creditos disponiveis")
+		return errors.New("Sem créditos disponiveis")
 	}
 
 	_, err = db.Exec("UPDATE users SET credits = credits -1 WHERE id = ?", userID)
+	return err
+}
+
+func ConsumeCreditCep(db *sql.DB, userID int) error {
+	var credits int
+	err := db.QueryRow("SELECT credits FROM users WHERE id = ?", userID).Scan(&credits)
+	if err != nil {
+		return err
+	}
+
+	if credits <= 0 {
+		return errors.New("Sem créditos disponiveis")
+	}
+
+	_, err = db.Exec("UPDATE users SET credits = credits -0 WHERE id = ?", userID)
 	return err
 }

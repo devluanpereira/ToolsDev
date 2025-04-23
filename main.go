@@ -40,13 +40,16 @@ func main() {
 
 	// Define routes
 	http.HandleFunc("/", handlers.HomeHandler)
-	http.HandleFunc("/signup", handlers.Signup(db))
-	http.HandleFunc("/login", handlers.Login(db))
-	http.HandleFunc("/logout", handlers.Logout())
 	http.HandleFunc("/buscar-cep", handlers.CepHandler)
 	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
+
+	http.HandleFunc("/logout", handlers.Logout())
+
+	http.HandleFunc("/login", handlers.Login(db))
+	http.HandleFunc("/signup", handlers.Signup(db))
 	http.HandleFunc("/buscar-code", handlers.BankHandler(db))
-	http.HandleFunc("/admin/adicionar-creditos", middleware.AuthMiddleware(
+	http.HandleFunc("/criar-pagamento", handlers.CriarPagamento(db))
+	http.HandleFunc("/admin/adicionar", middleware.AuthMiddleware(
 		middleware.AdminOnlyMiddleware(handlers.AdicionarCredito(db), db),
 	))
 
@@ -98,6 +101,15 @@ func createTables(db *sql.DB) error {
 		password VARCHAR(255) NOT NULL,
 		credits INT DEFAULT 30
 	);`
+
+	// pagamento := `CREATE TABLE IF NOT EXISTS pagamentos (
+	// 	id INT AUTO_INCREMENT PRIMARY KEY,
+	// 	user_id INT NOT NULL,
+	// 	email VARCHAR(255) NOT NULL,
+	// 	quantidade INT NOT NULL,
+	// 	status VARCHAR(50) DEFAULT 'pendente',
+	// 	link TEXT
+	// );`
 
 	if _, err := db.Exec(query); err != nil {
 		return fmt.Errorf("erro ao criar tabela: %w", err)

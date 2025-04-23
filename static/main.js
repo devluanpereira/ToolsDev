@@ -49,17 +49,36 @@ document.getElementById('cnpj-form').addEventListener('submit', async function (
     await performLookup('/buscar-cnpj', 'cnpj', 'cnpj-result', 'CNPJ');
 });
 
+document.getElementById("pagamento-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+  
+    const form = e.target;
+    const formData = new FormData(form);
+    const token = localStorage.getItem("token"); // ou sessionStorage.getItem
+  
+    const response = await fetch("/criar-pagamento", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + token
+      },
+      body: formData
+    });
+  
+    const text = await response.text();
+    document.body.innerHTML = text; // Ou redirecionar com window.location.href
+});
+
 // ISPB Lookup
 document.getElementById('bank-form').addEventListener('submit', async function (e) {
     e.preventDefault();
-    await performLookup('/buscar-code', 'code', 'code-result', 'código');
+    await performLookup('/buscar-code', 'code', 'code-result', 'ISPB');
 });
 
 // Lookup Helper Function
 async function performLookup(apiUrl, inputId, resultId, label) {
     const input = document.getElementById(inputId).value;
     if (!input) {
-        alert(`Por favor, digite um ${label} válido.`);
+        showAlert(`Por favor, digite um ${label} válido.`);
         return;
     }
 
@@ -103,3 +122,32 @@ document.getElementById('search-input').addEventListener('input', function () {
 
     if (!query) cards.forEach(card => (card.style.display = 'block'));
 });
+
+function showAlert(message) {
+    const alertContainer = document.getElementById("alert-tools");
+    const alertBox = document.getElementById("custom-alert-box");
+
+    document.getElementById("alert-message").textContent = message;
+    document.getElementById("alert-tools").classList.remove("hidden");
+
+    alertContainer.classList.remove("hidden");
+
+    requestAnimationFrame(() => {
+        alertBox.classList.remove("scale-95", "opacity-0");
+        alertBox.classList.add("scale-100", "opacity-100");
+    });
+}
+
+function closeAlert() {
+    const alertContainer = document.getElementById("alert-tools");
+    const alertBox = document.getElementById("custom-alert-box");
+
+    alertBox.classList.remove("scale-100", "opacity-100");
+    alertContainer.classList.add("scale-95", "opacity-0");
+
+    setTimeout(() => {
+        alertContainer.classList.add("hidden");
+    }, 300);
+
+    document.getElementById("alert-tools").classList.add("hidden");
+}
