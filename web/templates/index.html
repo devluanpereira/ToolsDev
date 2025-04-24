@@ -9,24 +9,20 @@
     <meta name="author" content="ToolsDev">
     <title>ToolsDev | Ferramentas fáceis e rápidas para buscar informações</title>
 
-    <!-- Links de Estilos e Scripts Externos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/static/css/animation.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-white flex flex-col min-h-screen" style="background-image: url('/static/images/body.jpg'); background-size: cover; background-position: center;">
+<body class="flex flex-col min-h-screen">
 
-    <!-- Navbar -->
     <nav class="bg-[#2563eb] fixed w-full top-0 left-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
-            <!-- Logo -->
             <a href="/" class="flex items-center">
                 <img src="static/images/logo.svg" alt="ToolsDev Logo" class="h-8 w-auto">
             </a>
 
-            <!-- Campo de Pesquisa (Desktop) -->
             <div class="relative hidden md:block">
                 <input type="text" id="search-input" placeholder="Pesquisar..." class="bg-white text-gray-900 p-2 pl-10 rounded-md w-80 border focus:outline-none focus:ring-2 focus:ring-[#bfdbfe]">
                 <button id="search-btn" class="absolute left-0 top-0 mt-2 ml-2 text-gray-500">
@@ -34,7 +30,6 @@
                 </button>
             </div>
 
-            <!-- Botão Menu Hamburguer (Mobile) -->
             <div class="flex items-center md:hidden">
                 <button id="menu-btn" class="hover:bg-[#bfdbfe] p-2 rounded">
                     <i class="fas fa-bars text-white"></i>
@@ -43,24 +38,19 @@
         </div>
     </nav>
 
-    <!-- Conteúdo Principal com Margem Superior -->
     <header class="container mx-auto px-4 flex flex-col md:flex-row items-center md:justify-between py-16 mt-16">
-        <!-- Imagem Empresarial (Aparece ao lado do título em Desktop) -->
         <div class="w-full md:w-1/2 mb-4 md:mb-0">
             <img src="static/images/logo1.svg" alt="Imagem Empresarial" class="w-full md:w-150 h-80 object-contain">
         </div>
 
-        <!-- Título e Descrição (colados à imagem) -->
         <div class="w-full md:w-1/2 text-center md:text-left md:ml-0">
-            <h1 class="text-3xl md:text-5xl font-bold text-[#ffffff] mb-6">Bem-vindo à ToolsDev</h1>
-            <p class="text-lg text-[#e6e6fa] mb-6">Ferramentas gratuitas e OpenSource, aproveite ao máximo! Estamos abertos para colaboradores, caso queira colaborar e expandir o projeto.</p>
-            <!-- Botão abaixo da descrição com espaçamento adequado -->
+            <h1 class="text-3xl md:text-5xl font-bold text-[#2563eb] mb-6"><span class="bg-[#2563eb] text-[#ffffff] mr-4 rounded-md">Bem vindo à </span>ToolsDev</h1>
+            <p class="text-lg text-[#bfdbfe] mb-6">Ferramentas gratuitas e OpenSource, aproveite ao máximo! Estamos abertos para colaboradores, caso queira colaborar e expandir o projeto.</p>
             <a onclick="window.location.href='/tools'" class="bg-[#2563eb] cursor-pointer text-white px-6 py-2 rounded-full mt-8 hover:bg-[#bfdbfe] transition duration-300">Iniciar</a>
         </div>
     </header>
 
-    <!-- Seção de Recursos -->
-    <section class="container mx-auto px-4 py-16">
+    <section class="container mx-auto px-4 py-16 bg-[#2563eb]">
         <h2 class="text-2xl md:text-4xl font-bold text-[#ffffff] text-center mb-6">Nossos Recursos</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="bg-[#2563eb] p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
@@ -78,16 +68,35 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-[#4c4c4c] text-white py-4 mt-auto">
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-2xl md:text-4xl font-bold text-[#2563eb] text-center mb-6">Perguntas Frequentes</h2>
+        <div class="grid grid-cols-1 gap-6">
+            <div class="bg-[#3b82f6] p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-[#ffffff] mb-2">O que é a ToolsDev?</h3>
+                <p class="text-base text-[#bfdbfe]">A ToolsDev é uma plataforma que oferece ferramentas online gratuitas e de código aberto para auxiliar desenvolvedores e empresas em diversas tarefas.</p>
+            </div>
+            <div class="bg-[#3b82f6] p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-[#ffffff] mb-2">As ferramentas são gratuitas?</h3>
+                <p class="text-base text-[#bfdbfe]">Sim, todas as ferramentas disponíveis na ToolsDev são completamente gratuitas para usar.</p>
+            </div>
+            <div class="bg-[#3b82f6] p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-[#ffffff] mb-2">Posso contribuir com o projeto?</h3>
+                <p class="text-base text-[#bfdbfe]">Com certeza! A ToolsDev é um projeto OpenSource e ficaremos muito felizes com a sua colaboração. Veja nossa página no GitHub para mais informações.</p>
+            </div>
+            <div class="bg-[#3b82f6] p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-[#ffffff] mb-2">Como posso entrar em contato com o suporte?</h3>
+                <p class="text-base text-[#bfdbfe]">Atualmente, oferecemos suporte através da nossa página no GitHub e da nossa comunidade online. Em breve, teremos mais canais de comunicação.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#2563eb] text-white py-4 mt-auto">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <!-- Seção de Direitos Autorais -->
                 <div class="mb-4 md:mb-0 text-center md:text-left">
                     <p class="text-sm mt-2">&copy; ToolsDev. Todos os direitos reservados.</p>
                 </div>
 
-                <!-- Links de Navegação -->
                 <div class="flex space-x-4">
                     <a href="#" class="text-gray-300 hover:text-blue-400 flex items-center space-x-2">
                         <i class="bx bxl-github text-2xl"></i>
@@ -97,13 +106,7 @@
         </div>
     </footer>
 
-    <!-- Script para Toggle do Menu Mobile -->
     <script src="static/main.js"></script>
 </body>
 
 </html>
-
-
-
-
-

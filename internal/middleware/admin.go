@@ -9,18 +9,6 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-// func AdminOnlyMiddleware(next http.HandlerFunc, db *sql.DB) http.HandlerFunc {
-// 	return func(w http.ResponseWriter, r *http.Request) {
-// 		role, err := GetRoleFromRequest(r, db)
-// 		if err != nil || role != "admin" {
-// 			http.Error(w, "Acesso negado", http.StatusForbidden)
-// 			return
-// 		}
-// 		next(w, r)
-
-// 	}
-// }
-
 func AdminOnlyMiddleware(next http.HandlerFunc, db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		role, err := GetRoleFromRequest(r)
