@@ -104,9 +104,9 @@ func CriarPagamento(db *sql.DB) http.HandlerFunc {
 					"failure": "http://localhost:8000/pagamento-falhou",
 				},
 				"metadata": map[string]interface{}{
-					"user_id":     userID,
-					"credits":     quantidade,
-					"payer_email": email,
+					"user_id": userID,
+					"credits": quantidade,
+					"email":   email,
 				},
 			}
 
@@ -154,5 +154,61 @@ func CriarPagamento(db *sql.DB) http.HandlerFunc {
 		default:
 			http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		}
+	}
+}
+
+func PagamentoSucesso(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userIDStr := r.URL.Query().Get("user_id")
+		creditsStr := r.URL.Query().Get("credits") // Correção do erro de digitação "creedits" para "credits"
+		paymentStatus := r.URL.Query().Get("status")
+
+		fmt.Printf("Pagamento Sucesso: User: %s, Créditos: %s, Status: %s\n", userIDStr, creditsStr, paymentStatus)
+
+		if paymentStatus == "approved" {
+			userID, err := strconv.Atoi(userIDStr)
+			if err != nil {
+				fmt.Println("Erro ao converter UserID:", err)
+				http.Error(w, "Erro interno", http.StatusInternalServerError)
+				return
+			}
+
+			credits, err := strconv.Atoi(creditsStr)
+			if err != nil {
+				fmt.Println("Erro ao converter Créditos:", err)
+				http.Error(w, "Erro interno", http.StatusInternalServerError) // Correção do erro de digitação "intern" para "interno"
+				return
+			}
+
+			// Atualizar os créditos do usuario no banco de dados
+			_, err = db.Exec("UPDATE users SET credits = credits + ? WHERE id = ?", credits, userID)
+			if err != nil {
+				fmt.Println("Erro ao atualizar créditos do usuário:", err)
+				http.Error(w, "Erro interno", http.StatusInternalServerError)
+				return
+			}
+
+			fmt.Printf("Créditos (%d) adicionados ao usuário ID %d.\n", credits, userID)
+
+			// Exibir uma mensagem de sucesso para o usuário
+			tmpl := template.Must(template.ParseFiles("web/templates/payments/pagamento_sucesso.html")) // Correção do caminho do template
+			tmpl.Execute(w, map[string]interface{}{
+				"Credits": credits,
+			})
+			return
+		} else {
+			// Se o pagamento não foi aprovado (ou outro status), exibir uma mensagem de falha
+			tmpl := template.Must(template.ParseFiles("web/templates/payments/pagamento_falhou.html"))
+			tmpl.Execute(w, nil)
+			return
+		}
+	}
+}
+
+func PagamentoFalhou() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Pagamento falhou...")
+		tmpl := template.Must(template.ParseFiles("web/templates/payments/pagamento_falhou.html"))
+		tmpl.Execute(w, nil)
 	}
 }

@@ -41,13 +41,12 @@ func main() {
 	// Define routes
 	http.HandleFunc("/", handlers.HomeHandler)
 
-	
-
 	http.HandleFunc("/logout", handlers.Logout())
 	http.HandleFunc("/login", handlers.Login(db))
 	http.HandleFunc("/signup", handlers.Signup(db))
 	http.HandleFunc("/buscar-code", handlers.BankHandler(db))
 	http.HandleFunc("/criar-pagamento", handlers.CriarPagamento(db))
+	http.HandleFunc("/pagamento-falhou", handlers.PagamentoFalhou())
 
 	http.HandleFunc("/admin/adicionar", middleware.AuthMiddleware(
 		middleware.AdminOnlyMiddleware(handlers.AdicionarCredito(db), db),
