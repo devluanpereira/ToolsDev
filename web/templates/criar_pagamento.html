@@ -27,29 +27,7 @@
       Ir para Pagamento
     </button>
   </form>
-
-  <script>
-    document.getElementById("pagamento-form").addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const form = e.target;
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch("/criar-pagamento", {
-        method: "POST",
-        body: formData,
-        credentials: "include" // ENVIA O COOKIE COM O TOKEN
-      });
-
-      const result = await response.text();
-      document.body.innerHTML = result;
-    } catch (err) {
-      alert("Erro ao processar pagamento.");
-      console.error(err);
-    }
-  });
-  </script>
+  <script src="static/main.js"></script>
 </body>
 
 </html>

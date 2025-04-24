@@ -6,10 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -19,32 +19,28 @@ type MercadoPagoResponse struct {
 	InitPoint string `json:"init_point"`
 }
 
-func extractUserIDFromToken(r *http.Request) (int, error) {
-	authHeader := r.Header.Get("Authorization")
-	if authHeader == "" {
-		return 0, fmt.Errorf("token ausente")
+func extractUserIDFromCookie(r *http.Request) (int, error) {
+	cookie, err := r.Cookie("token")
+	if err != nil {
+		return 0, fmt.Errorf("cookie 'token' não encontrado")
 	}
 
-	tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
-	if tokenStr == authHeader {
-		return 0, fmt.Errorf("formato do token inválido")
-	}
-
-	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+	tokenString := cookie.Value
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
 	if err != nil || !token.Valid {
-		return 0, fmt.Errorf("token inválido")
+		return 0, fmt.Errorf("token JWT inválido no cookie: %w", err)
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok || !token.Valid {
-		return 0, fmt.Errorf("token inválido")
+		return 0, fmt.Errorf("claims do token inválidas no cookie")
 	}
 
 	idFloat, ok := claims["userID"].(float64)
 	if !ok {
-		return 0, fmt.Errorf("ID do usuário não encontrado no token")
+		return 0, fmt.Errorf("ID do usuário não encontrado no token do cookie")
 	}
 
 	return int(idFloat), nil
@@ -54,33 +50,42 @@ func CriarPagamento(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			// Renderiza o formulário de pagamento
 			tmpl := template.Must(template.ParseFiles("web/templates/criar_pagamento.html"))
 			tmpl.Execute(w, nil)
 
 		case http.MethodPost:
-			// Processa o pagamento
-			_, err := extractUserIDFromToken(r)
+			userID, err := extractUserIDFromCookie(r)
 			if err != nil {
 				http.Error(w, "Usuário não autenticado: "+err.Error(), http.StatusUnauthorized)
 				return
 			}
+			fmt.Printf("Usuário autenticado com ID (via cookie): %d\n", userID)
 
 			if err := r.ParseForm(); err != nil {
+				fmt.Printf("Erro ao analisar formulário: %v\n", err)
 				http.Error(w, "Erro ao analisar formulário", http.StatusBadRequest)
 				return
 			}
+			fmt.Printf("Dados do formulário após ParseForm: %+v\n", r.PostForm)
 
 			email := r.FormValue("email")
 			quantidadeStr := r.FormValue("quantidade")
+			fmt.Printf("Valor da quantidade recebido: '%s'\n", quantidadeStr)
 
 			quantidade, err := strconv.Atoi(quantidadeStr)
-			if err != nil || quantidade <= 0 {
+			if err != nil {
+				fmt.Printf("Erro ao converter quantidade para inteiro: %v\n", err)
+				http.Error(w, "Quantidade inválida", http.StatusBadRequest)
+				return
+			}
+			if quantidade <= 0 {
+				fmt.Println("Quantidade é zero ou negativa:", quantidade)
 				http.Error(w, "Quantidade inválida", http.StatusBadRequest)
 				return
 			}
 
-			// Criação do pagamento via Mercado Pago
+			fmt.Printf("Quantidade convertida para inteiro: %d\n", quantidade)
+
 			preference := map[string]interface{}{
 				"items": []map[string]interface{}{
 					{
@@ -95,13 +100,22 @@ func CriarPagamento(db *sql.DB) http.HandlerFunc {
 					"email": email,
 				},
 				"back_urls": map[string]string{
-					"success": "http://localhost:8000/pagamento-sucesso",
+					"success": fmt.Sprintf("http://localhost:8000/pagamento-sucesso?user_id=%d&credits=%d", userID, quantidade),
 					"failure": "http://localhost:8000/pagamento-falhou",
 				},
-				"auto_return": "approved",
+				"metadata": map[string]interface{}{
+					"user_id":     userID,
+					"credits":     quantidade,
+					"payer_email": email,
+				},
 			}
 
-			payload, _ := json.Marshal(preference)
+			payload, err := json.Marshal(preference)
+			if err != nil {
+				http.Error(w, "Erro ao criar payload JSON", http.StatusInternalServerError)
+				return
+			}
+			fmt.Printf("Payload JSON para o Mercado Pago: %s\n", string(payload))
 
 			req, err := http.NewRequest("POST", "https://api.mercadopago.com/checkout/preferences", bytes.NewBuffer(payload))
 			if err != nil {
@@ -119,13 +133,23 @@ func CriarPagamento(db *sql.DB) http.HandlerFunc {
 			}
 			defer resp.Body.Close()
 
+			if resp.StatusCode != http.StatusCreated {
+				var bodyBytes []byte
+				bodyBytes, _ = io.ReadAll(resp.Body)
+				fmt.Printf("Erro do MercadoPago: Status Code %d, Body: %s\n", resp.StatusCode, string(bodyBytes))
+				http.Error(w, "Erro na comunicação com o MercadoPago", http.StatusInternalServerError)
+				return
+			}
+
 			var mpResponse MercadoPagoResponse
 			if err := json.NewDecoder(resp.Body).Decode(&mpResponse); err != nil {
 				http.Error(w, "Erro ao ler resposta do MercadoPago", http.StatusInternalServerError)
 				return
 			}
 
-			http.Redirect(w, r, mpResponse.InitPoint, http.StatusSeeOther)
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(mpResponse)
+			return
 
 		default:
 			http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)

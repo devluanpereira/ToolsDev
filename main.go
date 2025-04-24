@@ -41,10 +41,9 @@ func main() {
 	// Define routes
 	http.HandleFunc("/", handlers.HomeHandler)
 
-	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
+	
 
 	http.HandleFunc("/logout", handlers.Logout())
-
 	http.HandleFunc("/login", handlers.Login(db))
 	http.HandleFunc("/signup", handlers.Signup(db))
 	http.HandleFunc("/buscar-code", handlers.BankHandler(db))
@@ -57,6 +56,7 @@ func main() {
 	// Protected routes
 	http.HandleFunc("/tools", services.Protected(handlers.Tools))
 	http.HandleFunc("/buscar-cep", services.Protected(handlers.CepHandler))
+	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
 
 	server := &http.Server{
 		Addr:         ":8000",
