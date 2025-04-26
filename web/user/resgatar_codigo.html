@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resgatar Código de Crédito</title>
+</head>
+<body>
+    <h1>Resgatar Código de Crédito</h1>
+    <form action="/resgatar-codigo" method="post">
+        <div>
+            <label for="user_id">Seu ID de Usuário:</label>
+            <input type="number" id="user_id" name="user_id" required>
+        </div>
+        <div>
+            <label for="codigo_resgate">Código de Resgate:</label>
+            <input type="text" id="codigo_resgate" name="codigo_resgate" required>
+        </div>
+        <button type="submit">Resgatar Créditos</button>
+    </form>
+
+    {{if .Message}}
+    <p style="color: green;">{{.Message}}</p>
+    {{end}}
+
+    {{if .Error}}
+    <p style="color: red;">Erro ao resgatar código: {{.Error}}</p>
+    {{end}}
+</body>
+</html>

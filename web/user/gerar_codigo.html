@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerar Código de Crédito</title>
+</head>
+<body>
+    <h1>Gerar Código de Crédito</h1>
+    <form action="/gerar-codigo" method="post">
+        <div>
+            <label for="user_id">ID do Usuário:</label>
+            <input type="number" id="user_id" name="user_id" required>
+        </div>
+        <div>
+            <label for="credits">Créditos a Comprar:</label>
+            <input type="number" id="credits" name="credits" required>
+        </div>
+        <button type="submit">Gerar Código de Pagamento</button>
+    </form>
+
+    {{if .Code}}
+    <h2>Código de Pagamento Gerado:</h2>
+    <p><strong>Código:</strong> {{.Code}}</p>
+    <p><strong>ID de Pagamento (Simulado):</strong> {{.PaymentID}}</p>
+    <p>Por favor, utilize o código de pagamento para realizar o pagamento.</p>
+    <p>Seus créditos serão adicionados automaticamente após a confirmação do pagamento.</p>
+    {{end}}
+</body>
+</html>
