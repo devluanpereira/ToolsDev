@@ -119,6 +119,18 @@ func Login(db *sql.DB) http.HandlerFunc {
 }
 
 ```
+## Como funciona os pagamentos dentro da plataform, porém ainda em fase de desenvolvimento.
+
+ ```go
+pagamento := `CREATE TABLE IF NOT EXISTS pagamentos (
+                 id INT AUTO_INCREMENT PRIMARY KEY,
+                 user_id INT NOT NULL,
+                 email VARCHAR(255) NOT NULL,
+                 quantidade INT NOT NULL,
+                 status VARCHAR(50) DEFAULT 'pendente',
+                 link TEXT
+);`
+```
 
 ## Como Executar o Projeto
 
