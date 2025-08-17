@@ -102,7 +102,7 @@ func createTables(db *sql.DB) error {
 		credits INT DEFAULT 30
 	);`
 
-	// pagamento := `CREATE TABLE IF NOT EXISTS pagamentos (
+	//  pagamento := `CREATE TABLE IF NOT EXISTS pagamentos (
 	// 	id INT AUTO_INCREMENT PRIMARY KEY,
 	// 	user_id INT NOT NULL,
 	// 	email VARCHAR(255) NOT NULL,
