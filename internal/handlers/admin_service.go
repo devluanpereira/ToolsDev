@@ -22,7 +22,7 @@ func AdicionarCredito(db *sql.DB) http.HandlerFunc {
 				return
 			}
 			tmpl.Execute(w, nil)
-			return // <- ESSENCIAL!
+			return 
 		}
 
 		if r.Method == http.MethodPost {
@@ -42,7 +42,7 @@ func AdicionarCredito(db *sql.DB) http.HandlerFunc {
 			}
 
 			http.Redirect(w, r, "/admin/adicionar", http.StatusSeeOther)
-			return // <- ESSENCIAL!
+			return
 		}
 
 		// Se não for GET nem POST
