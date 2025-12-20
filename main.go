@@ -34,11 +34,10 @@ func main() {
 		log.Fatalf("Erro ao criar tabelas: %v", err)
 	}
 
-	// Serve static files (CSS, JS, images)
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	// Define routes
+	// ROTAS
 	http.HandleFunc("/", handlers.HomeHandler)
 
 	http.HandleFunc("/logout", handlers.Logout())
@@ -51,7 +50,7 @@ func main() {
 		middleware.AdminOnlyMiddleware(handlers.AdicionarCredito(db), db),
 	))
 
-	// Protected routes
+	// ROTAS PROTEGIDAS
 	http.HandleFunc("/tools", services.Protected(handlers.Tools))
 	http.HandleFunc("/buscar-cep", services.Protected(handlers.CepHandler))
 	http.HandleFunc("/buscar-cnpj", handlers.CnpjHandler)
@@ -101,15 +100,6 @@ func createTables(db *sql.DB) error {
 		password VARCHAR(255) NOT NULL,
 		credits INT DEFAULT 30
 	);`
-
-	//  pagamento := `CREATE TABLE IF NOT EXISTS pagamentos (
-	// 	id INT AUTO_INCREMENT PRIMARY KEY,
-	// 	user_id INT NOT NULL,
-	// 	email VARCHAR(255) NOT NULL,
-	// 	quantidade INT NOT NULL,
-	// 	status VARCHAR(50) DEFAULT 'pendente',
-	// 	link TEXT
-	// );`
 
 	if _, err := db.Exec(query); err != nil {
 		return fmt.Errorf("erro ao criar tabela: %w", err)
