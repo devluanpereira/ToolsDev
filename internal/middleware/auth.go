@@ -20,7 +20,7 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
-
+// AQUI COLOQUE O JWT_SECRET NO ENV
 		tokenStr := cookie.Value
 		jwtSecret := []byte(os.Getenv("JWT_SECRET"))
 
